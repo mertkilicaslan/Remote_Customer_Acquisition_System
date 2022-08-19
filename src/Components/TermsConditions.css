@@ -5,21 +5,35 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  background-color: antiquewhite;
+  background-color: #10743c;
   justify-content: center;
   align-items: center;
 }
 
 .termsConditions-inner {
   position: relative;
+  border-radius: 10px;
   padding: 32px;
   width: 100%;
   max-width: 640px;
   background-color: white;
+  text-align: center;
 }
 
 .termsConditions-inner .close-button {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border: 0;
+  background-color: #80bc04;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
+
+.termsConditions-inner .close-button:hover {
+  background-color: #588404;
 }

@@ -1,12 +1,71 @@
 * {
   font-family: "Source Sans Pro", sans-serif;
   font-style: normal;
+  font-size: 14px;
 }
-form {
+
+body {
+  background-color: #10743c;
+  justify-content: center;
+}
+
+.center {
+  position: relative;
+  padding: 70px;
+  background-color: #fff;
+  border-radius: 8px;
   text-align: center;
-  
+  display: table;
+  margin: 0 auto;
+}
+
+.input-center {
+  position: relative;
+  width: 300px;
+  height: 40px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
 }
 
 button {
-  text-align: center;
+  width: 300px;
+  height: 40px;
+  margin-top: 15px;
+  border-radius: 8px;
+  color: white;
+  background-color: #80bc04;
+  border: 0;
+}
+
+button:hover {
+  background-color: #588404;
+}
+
+label {
+  text-align: left;
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.checkBoxes {
+  margin-left: 0px;
+  text-align: left;
+  display: flex;
+}
+
+input {
+  text-indent: 10px;
+}
+
+p {
+  position: relative;
+  color: #ff4444;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-top: 0px;
+  width: 300px;
 }

@@ -9,10 +9,10 @@ function TermsConditions(props) {
           className="close-button"
           onClick={() => {
             props.setTrigger(false);
-            props.confirmation(false);
+            props.setTrigger2(false);
           }}
         >
-          Kapat
+          &#10006;
         </button>
 
         {props.children}
@@ -20,10 +20,10 @@ function TermsConditions(props) {
         <button
           onClick={() => {
             props.setTrigger(false);
-            props.confirmation(true);
+            props.setTrigger2(true);
           }}
         >
-          Okudum / Onayladım
+          Okudum, onayladım.
         </button>
       </div>
     </div>
