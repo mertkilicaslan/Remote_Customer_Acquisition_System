@@ -6,6 +6,9 @@ import "./App.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <header>
+      <button>SugarBank</button>
+    </header>
     <App />
   </React.StrictMode>
 );

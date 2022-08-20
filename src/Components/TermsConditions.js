@@ -1,7 +1,7 @@
 import React from "react";
 import "./TermsConditions.css";
 
-function TermsConditions(props) {
+function TermsConditions(props, {onChange}) {
   return props.trigger ? (
     <div className="termsConditions">
       <div className="termsConditions-inner">
@@ -28,7 +28,7 @@ function TermsConditions(props) {
       </div>
     </div>
   ) : (
-    ""
+    null
   );
 }
 

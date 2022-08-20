@@ -14,6 +14,11 @@ function App() {
   const initalValues = {
     email: "",
     password: "",
+    name: "",
+    surname: "",
+    birthday: "",
+    tcNo: "",
+    phoneNo: "",
   };
 
   const [formValues, setFormValues] = useState(initalValues);
@@ -26,19 +31,45 @@ function App() {
 
   const validate = (values) => {
     const errors = {};
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
     const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const regexTcNo = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
+    const regexPhoneNo =
+      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
 
-    if (!values.email) {
-      errors.email = "Lütfen e-mail adresinizi giriniz.";
-    } else if (!regexEmail.test(values.email)) {
-      errors.email = "E-mail geçerli formatda değil.";
-    }
-    if (!values.password) {
-      errors.password = "Lütfen şifrenizi giriniz.";
-    } else if (!regexPassword.test(values.password)) {
-      errors.password =
-        "Şifreniz en az sekiz karakter, bir büyük harf, bir küçük harf ve bir sayı içermelidir.";
+    if (showMailPass) {
+      if (!values.email) {
+        errors.email = "Lütfen e-mail adresinizi giriniz.";
+      } else if (!regexEmail.test(values.email)) {
+        errors.email = "E-mail geçerli formatda değil.";
+      }
+      if (!values.password) {
+        errors.password = "Lütfen şifrenizi giriniz.";
+      } else if (!regexPassword.test(values.password)) {
+        errors.password =
+          "Şifreniz en az sekiz karakter, bir büyük harf, bir küçük harf ve bir sayı içermelidir.";
+      }
+    } else if (showNameSurnameDate) {
+      if (!values.name) {
+        errors.name = "Lütfen isminizi giriniz.";
+      }
+      if (!values.surname) {
+        errors.surname = "Lütfen soyisminizi giriniz.";
+      }
+      if (!values.birthday) {
+        errors.birthday = "Lütfen doğum tarihinizi giriniz.";
+      }
+    } else if (showPhoneTC) {
+      if (!values.tcNo) {
+        errors.tcNo = "Lütfen TC Kimlik Numaranızı giriniz.";
+      } else if (!regexTcNo.test(values.tcNo)) {
+        errors.tcNo = "TC Kimlik Numaranızı kontrol edin.";
+      }
+      if (!values.phoneNo) {
+        errors.phoneNo = "Lütfen cep telefon numaranızı giriniz.";
+      } else if (!regexPhoneNo.test(values.phoneNo)) {
+        errors.phoneNo = "Cep telefon numaranızı kontrol edin.";
+      }
     }
 
     return errors;
@@ -46,15 +77,15 @@ function App() {
 
   useEffect(() => {
     console.log("error", formErrors);
+    console.log("value", formValues);
     if (Object.keys(formErrors).length === 0) {
       console.log("value", formValues);
     }
-  }, [formErrors]);
+  }, [formErrors, formValues, doesConfirm]);
 
   return (
     <>
-      <h1>Sugar Bank</h1>
-
+    
       <div>
         {showMailPass && (
           <form className="center">
@@ -70,7 +101,7 @@ function App() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p>{formErrors.email}</p>
+            <p className="errorValue">{formErrors.email}</p>
 
             <div>
               <label htmlFor="password">Şifre</label>
@@ -83,7 +114,7 @@ function App() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p>{formErrors.password}</p>
+            <p className="errorValue">{formErrors.password}</p>
 
             <button
               onClick={(e) => {
@@ -93,6 +124,7 @@ function App() {
                 if (Object.keys(errors).length) {
                   setFormErrors(errors);
                 } else {
+                  setFormErrors({});
                   setShow(false);
                   setShow2(true);
                 }
@@ -108,27 +140,55 @@ function App() {
             <div>
               <label htmlFor="name">Ad</label>
               <input
+                autoFocus
                 className="input-center"
                 type="text"
                 id="name"
-                autoFocus
+                name="name"
+                value={formValues.name}
+                onChange={handleChange}
               ></input>
             </div>
+            <p className="errorValue">{formErrors.name}</p>
 
             <div>
               <label htmlFor="surname">Soyad</label>
-              <input className="input-center" type="text" id="surname"></input>
+              <input
+                className="input-center"
+                type="text"
+                id="surname"
+                name="surname"
+                value={formValues.surname}
+                onChange={handleChange}
+              ></input>
             </div>
+            <p className="errorValue">{formErrors.surname}</p>
 
             <div>
               <label htmlFor="birthday">Doğum Tarihi</label>
-              <input className="input-center" type="date" id="birthday"></input>
+              <input
+                className="input-center"
+                type="date"
+                id="birthday"
+                name="birthday"
+                value={formValues.birthday}
+                onChange={handleChange}
+              ></input>
             </div>
+            <p className="errorValue">{formErrors.birthday}</p>
 
             <button
-              onClick={() => {
-                setShow2(false);
-                setShow3(true);
+              onClick={(e) => {
+                e.preventDefault();
+                const errors = validate(formValues);
+
+                if (Object.keys(errors).length) {
+                  setFormErrors(errors);
+                } else {
+                  setFormErrors({});
+                  setShow2(false);
+                  setShow3(true);
+                }
               }}
             >
               Devam
@@ -139,19 +199,31 @@ function App() {
         {showPhoneTC && (
           <form className="center">
             <div>
-              <label htmlFor="TC">TC Kimlik Numarası</label>
+              <label htmlFor="tcNo">TC Kimlik Numarası</label>
+              <input
+                autoFocus
+                className="input-center"
+                type="text"
+                id="tcNo"
+                name="tcNo"
+                value={formValues.tcNo}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <p className="errorValue">{formErrors.tcNo}</p>
+
+            <div>
+              <label htmlFor="phoneNo">Cep Telefon Numarası</label>
               <input
                 className="input-center"
                 type="text"
-                id="TC"
-                autoFocus
+                id="phoneNo"
+                name="phoneNo"
+                value={formValues.phoneNo}
+                onChange={handleChange}
               ></input>
             </div>
-
-            <div>
-              <label htmlFor="phoneNum">Cep Telefon Numarası</label>
-              <input className="input-center" type="text" id="phoneNum"></input>
-            </div>
+            <p className="errorValue">{formErrors.phoneNo}</p>
 
             <div className="checkBoxes">
               <input
@@ -159,13 +231,9 @@ function App() {
                 id="uzaktanMusteri"
                 name="checkbox1"
                 value="uzaktanMusteri"
-                onChange={(e) => {
+                onClick={(e) => {
                   if (e.target.checked) {
                     setShow4(true);
-
-                    if (!doesConfirm) {
-                      e.target.checked = true;
-                    }
                   }
                 }}
               ></input>
@@ -178,14 +246,15 @@ function App() {
                 trigger2={doesConfirm}
                 setTrigger2={setConfirm}
               >
+                <h2> Ayıdnlatma Metni</h2>
                 <p>
-                  <h2> Ayıdnlatma Metni</h2>
                   &emsp; Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
                   Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
                   Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
                   Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
                   Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-                  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
+                  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
+                  Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
                 </p>
               </TermsConditions>
             </div>
@@ -201,8 +270,16 @@ function App() {
             </div>
 
             <button
-              onClick={() => {
-                setShow3(false);
+              onClick={(e) => {
+                e.preventDefault();
+                const errors = validate(formValues);
+
+                if (Object.keys(errors).length) {
+                  setFormErrors(errors);
+                } else {
+                  setFormErrors({});
+                  setShow3(false);
+                }
               }}
             >
               Müşteri Ol

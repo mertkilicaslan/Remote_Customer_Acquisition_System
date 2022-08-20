@@ -4,8 +4,45 @@
   font-size: 14px;
 }
 
+html,
 body {
-  background-color: #10743c;
+  margin: 0;
+  height: 100%;
+  padding: 0;
+}
+
+
+header {
+  background-color: #fff;
+  color: #10743c;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  margin-bottom: 150px;
+  justify-content: space-between;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  position: relative;
+}
+
+header button {
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #10743c;
+}
+
+header button:hover {
+  background-color: #fff;
+}
+
+body {
+  background-image: linear-gradient(to bottom right, #233329, #63D471);
   justify-content: center;
 }
 
@@ -23,7 +60,7 @@ body {
   position: relative;
   width: 300px;
   height: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
@@ -34,9 +71,10 @@ button {
   height: 40px;
   margin-top: 15px;
   border-radius: 8px;
-  color: white;
+  color: #fff;
   background-color: #80bc04;
   border: 0;
+  cursor: pointer;
 }
 
 button:hover {
@@ -46,7 +84,8 @@ button:hover {
 label {
   text-align: left;
   display: flex;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 .checkBoxes {
@@ -59,7 +98,7 @@ input {
   text-indent: 10px;
 }
 
-p {
+.errorValue {
   position: relative;
   color: #ff4444;
   text-align: left;
@@ -67,5 +106,6 @@ p {
   font-weight: 400;
   line-height: 1.25;
   margin-top: 0px;
+  margin-bottom: 10px;
   width: 300px;
 }
