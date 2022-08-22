@@ -1,7 +1,7 @@
 import React from "react";
 import "./TermsConditions.css";
 
-function TermsConditions(props, {onChange}) {
+function TermsConditions(props) {
   return props.trigger ? (
     <div className="termsConditions">
       <div className="termsConditions-inner">

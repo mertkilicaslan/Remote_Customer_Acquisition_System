@@ -46,6 +46,13 @@ body {
   justify-content: center;
 }
 
+.greetings{
+  display: relative;
+  margin-top: -20px;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
 .center {
   position: relative;
   padding: 70px;
@@ -59,7 +66,7 @@ body {
 .input-center {
   position: relative;
   width: 300px;
-  height: 40px;
+  height: 37px;
   margin-bottom: 2px;
   border-radius: 8px;
   border-style: solid;

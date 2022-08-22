@@ -32,7 +32,7 @@ function App() {
   const validate = (values) => {
     const errors = {};
     const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
-    const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/;
     const regexTcNo = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
     const regexPhoneNo =
       /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
@@ -58,6 +58,13 @@ function App() {
       }
       if (!values.birthday) {
         errors.birthday = "Lütfen doğum tarihinizi giriniz.";
+      } else if (
+        parseInt(values.birthday.substring(0, values.birthday.indexOf("-"))) >=
+          2012 ||
+        parseInt(values.birthday.substring(0, values.birthday.indexOf("-"))) <=
+          1922
+      ) {
+        errors.birthday = "Doğum tarihinizi kontrol edin.";
       }
     } else if (showPhoneTC) {
       if (!values.tcNo) {
@@ -85,10 +92,16 @@ function App() {
 
   return (
     <>
-    
+      <header>
+        <button>Şekerbank Demo</button>
+      </header>
+
       <div>
         {showMailPass && (
           <form className="center">
+            <p className="greetings">
+              Şekerbank İnternet Bankacılığına Hoş Geldiniz!
+            </p>
             <div>
               <label htmlFor="email">E-Mail</label>
               <input
