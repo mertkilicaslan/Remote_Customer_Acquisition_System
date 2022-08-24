@@ -2,25 +2,23 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import TermsConditions from "./Components/TermsConditions";
 
+// Validation
+const initalValues = {
+  email: "",
+  password: "",
+  name: "",
+  surname: "",
+  birthday: "",
+  tcNo: "",
+  phoneNo: "",
+};
+
 function App() {
   const [showMailPass, setShow] = useState(true);
   const [showNameSurnameDate, setShow2] = useState(false);
   const [showPhoneTC, setShow3] = useState(false);
-
   const [popUpTermsConditions, setShow4] = useState(false);
   const [doesConfirm, setConfirm] = useState(false);
-
-  // Validation
-  const initalValues = {
-    email: "",
-    password: "",
-    name: "",
-    surname: "",
-    birthday: "",
-    tcNo: "",
-    phoneNo: "",
-  };
-
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
 
@@ -99,9 +97,7 @@ function App() {
       <div>
         {showMailPass && (
           <form className="center">
-            <p className="greetings">
-              Şekerbank İnternet Bankacılığına Hoş Geldiniz!
-            </p>
+            <p className="greetings">İnternet Bankacılığına Hoş Geldiniz!</p>
             <div>
               <label htmlFor="email">E-Mail</label>
               <input
@@ -244,7 +240,9 @@ function App() {
                 id="uzaktanMusteri"
                 name="checkbox1"
                 value="uzaktanMusteri"
+                checked={doesConfirm}
                 onClick={(e) => {
+                  setConfirm(false);
                   if (e.target.checked) {
                     setShow4(true);
                   }
