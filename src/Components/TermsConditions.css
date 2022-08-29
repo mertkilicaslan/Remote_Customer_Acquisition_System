@@ -5,9 +5,9 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  background-image: linear-gradient(to bottom right, #233329, #63D471);
   justify-content: center;
   align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
 }
 
 .termsConditions-inner {

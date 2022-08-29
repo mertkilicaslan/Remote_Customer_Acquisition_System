@@ -6,9 +6,6 @@ function TermsConditions(props) {
   return (
     props.trigger && (
       <>
-        <header>
-          <button>Şekerbank Demo</button>
-        </header>
         <div className="termsConditions">
           <div className="termsConditions-inner">
             <button
