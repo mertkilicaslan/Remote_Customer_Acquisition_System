@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import TermsConditions from "./Components/TermsConditions";
 
-// Validation
 const initalValues = {
   email: "",
   password: "",
@@ -11,6 +10,7 @@ const initalValues = {
   birthday: "",
   tcNo: "",
   phoneNo: "",
+  hasatKart: "false",
 };
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
   const [showPhoneTC, setShow3] = useState(false);
   const [popUpTermsConditions, setShow4] = useState(false);
   const [doesConfirm, setConfirm] = useState(false);
+  const [hasatKart, setHasatKart] = useState(false);
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
 
@@ -81,12 +82,9 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("error", formErrors);
-    console.log("value", formValues);
-    if (Object.keys(formErrors).length === 0) {
-      console.log("value", formValues);
-    }
-  }, [formErrors, formValues, doesConfirm]);
+    //console.log("error", formErrors);
+    //console.log("value", formValues);
+  }, [formErrors, formValues, doesConfirm, hasatKart]);
 
   return (
     <>
@@ -275,7 +273,14 @@ function App() {
                 type="checkbox"
                 id="hasatKart"
                 name="checkbox2"
-                value="hasatKart"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setHasatKart(true);
+                  } else {
+                    setHasatKart(false);
+                  }
+                  formValues["hasatKart"] = (!hasatKart).toString();
+                }}
               ></input>
               <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
             </div>
@@ -290,6 +295,12 @@ function App() {
                 } else {
                   setFormErrors({});
                   setShow3(false);
+
+                  fetch("http://localhost:8080/customer/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formValues),
+                  });
                 }
               }}
             >
