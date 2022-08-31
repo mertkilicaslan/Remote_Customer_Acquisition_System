@@ -2,6 +2,7 @@
   font-family: "Source Sans Pro", sans-serif;
   font-style: normal;
   font-size: 14px;
+  text-decoration: none;
 }
 
 html,
@@ -44,6 +45,7 @@ body {
   margin-top: 10px;
   margin-bottom: 40px;
   font-style: italic;
+  font-size: 15px;
 }
 
 .center {
@@ -68,8 +70,9 @@ body {
 button {
   width: 300px;
   height: 40px;
-  margin-top: 15px;
+  margin-top: 30px;
   border-radius: 8px;
+  display: block;
   color: #fff;
   background-color: #80bc04;
   border: 0;
@@ -80,6 +83,7 @@ button {
   background-color: #588404;
   transition: 0.2s;
 }
+
 
 label {
   display: flex;

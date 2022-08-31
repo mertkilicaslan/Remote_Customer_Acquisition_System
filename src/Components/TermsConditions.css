@@ -37,3 +37,6 @@
 .termsConditions-inner .close-button:hover {
   background-color: #588404;
 }
+.termsConditions-inner button {
+  display: inline;
+}
