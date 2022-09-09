@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import TermsConditions from "./TermsConditions";
@@ -17,7 +18,9 @@ export function SignUp() {
   const [showMailPass, setShowPage1] = useState(true);
   const [showNameSurnameDate, setShowPage2] = useState(false);
   const [showPhoneTC, setShowPage3] = useState(false);
+  const [showSuccessPage, setShowPage4] = useState(false);
   const [popUpTermsConditions, setShowPopUp] = useState(false);
+  const [signUpSuccessful, setSignUpSuccessful] = useState(false);
   const [doesConfirm, setConfirm] = useState(false);
   const [hasatKart, setHasatKart] = useState(false);
   const [formValues, setFormValues] = useState(initalValues);
@@ -84,11 +87,11 @@ export function SignUp() {
   useEffect(() => {
     //console.log("error", formErrors);
     //console.log("value", formValues);
-  }, [formErrors, formValues, doesConfirm, hasatKart]);
+  }, [formErrors, formValues, doesConfirm, hasatKart, signUpSuccessful]);
 
   return (
     <>
-      <div>
+      <main>
         {showMailPass && (
           <form className="center">
             <p className="greetings">Müşterimiz Ol</p>
@@ -234,8 +237,9 @@ export function SignUp() {
                 id="uzaktanMusteri"
                 name="checkbox1"
                 value="uzaktanMusteri"
+                required
                 checked={doesConfirm}
-                onClick={(e) => {
+                onChange={(e) => {
                   setConfirm(false);
                   if (e.target.checked) {
                     setShowPopUp(true);
@@ -286,17 +290,26 @@ export function SignUp() {
                 e.preventDefault();
                 const errors = validate(formValues);
 
-                if (Object.keys(errors).length) {
+                if (Object.keys(errors).length || !doesConfirm) {
                   setFormErrors(errors);
                 } else {
                   setFormErrors({});
                   setShowPage3(false);
+                  setShowPage4(true);
 
                   fetch("http://localhost:8080/customer/add", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formValues),
-                  });
+                  })
+                    .then((res) => {
+                      if (res.ok && res.status === 200) {
+                        setSignUpSuccessful(true);
+                        return res;
+                      }
+                    })
+                    .then((data) => console.log(data))
+                    .catch((err) => console.log(err));
                 }
               }}
             >
@@ -304,7 +317,29 @@ export function SignUp() {
             </button>
           </form>
         )}
-      </div>
+
+        {showSuccessPage && (
+          <div className="center">
+            <h1>
+              {signUpSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
+            </h1>
+            <p>
+              {signUpSuccessful
+                ? "Müşterimiz olduğunuz için teşekkür ederiz. "
+                : "Anasayfaya dönün ve lütfen tekrar deneyin."}
+            </p>
+            <Link to="/">
+              <button
+                onClick={(e) => {
+                  setShowPage4(false);
+                }}
+              >
+                Anasayfa
+              </button>
+            </Link>
+          </div>
+        )}
+      </main>
     </>
   );
 }

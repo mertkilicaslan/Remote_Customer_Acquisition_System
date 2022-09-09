@@ -12,7 +12,7 @@ body {
   padding: 0;
 }
 
-header {
+nav {
   background-color: #fff;
   color: #10743c;
   width: 100%;
@@ -25,7 +25,7 @@ header {
   position: relative;
 }
 
-header button {
+nav button {
   width: 100px;
   height: 40px;
   font-weight: bold;

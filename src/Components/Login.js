@@ -1,8 +1,28 @@
 import "../App.css";
+import React, { useState, useEffect } from "react";
+
+const initalValues = {
+  email: "",
+  password: "",
+};
+
 export function Login() {
+  const [formValues, setFormValues] = useState(initalValues);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  useEffect(() => {
+    //console.log("error", formErrors);
+    console.log("value", formValues);
+  }, [formValues]);
+
   return (
     <>
       <form className="center">
+        <p className="greetings">İnternet bankacılığına giriş Yap</p>
         <div>
           <label htmlFor="email">E-Mail</label>
           <input
@@ -11,6 +31,8 @@ export function Login() {
             type="text"
             id="email"
             name="email"
+            value={formValues.email}
+            onChange={handleChange}
           ></input>
         </div>
 
@@ -21,8 +43,11 @@ export function Login() {
             type="password"
             id="password"
             name="password"
+            value={formValues.password}
+            onChange={handleChange}
           ></input>
         </div>
+        <button>Giriş Yap</button>
       </form>
     </>
   );
