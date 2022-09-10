@@ -84,7 +84,6 @@ button {
   transition: 0.2s;
 }
 
-
 label {
   display: flex;
   margin: 15px 0px 5px 5px;
@@ -117,4 +116,26 @@ input:focus {
   line-height: 1.25;
   margin: 5px 5px 10px 5px;
   width: 300px;
+}
+
+.nameSurname-btn {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 17px;
+  margin: 20px;
+  color: #10743c;
+}
+
+.profile-icon {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 22.5px;
+  right: 120px;
+  width: 35px;
+  height: 35px;
 }

@@ -294,10 +294,8 @@ export function SignUp() {
                   setFormErrors(errors);
                 } else {
                   setFormErrors({});
-                  setShowPage3(false);
-                  setShowPage4(true);
 
-                  fetch("http://localhost:8080/customer/add", {
+                  fetch("http://localhost:8080/customer/signup", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formValues),
@@ -309,7 +307,11 @@ export function SignUp() {
                       }
                     })
                     .then((data) => console.log(data))
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log(err))
+                    .finally(() => {
+                      setShowPage3(false);
+                      setShowPage4(true);
+                    });
                 }
               }}
             >
