@@ -99,7 +99,7 @@ export function SignUp() {
               <label htmlFor="email">E-Mail</label>
               <input
                 autoFocus
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="email"
                 name="email"
@@ -107,12 +107,12 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.email}</p>
+            <p className="signUpError">{formErrors.email}</p>
 
             <div>
               <label htmlFor="password">Şifre</label>
               <input
-                className="input-center"
+                className="inputCenter"
                 type="password"
                 id="password"
                 name="password"
@@ -120,7 +120,7 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.password}</p>
+            <p className="signUpError">{formErrors.password}</p>
 
             <button
               onClick={(e) => {
@@ -147,7 +147,7 @@ export function SignUp() {
               <label htmlFor="name">Ad</label>
               <input
                 autoFocus
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="name"
                 name="name"
@@ -155,12 +155,12 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.name}</p>
+            <p className="signUpError">{formErrors.name}</p>
 
             <div>
               <label htmlFor="surname">Soyad</label>
               <input
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="surname"
                 name="surname"
@@ -168,12 +168,12 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.surname}</p>
+            <p className="signUpError">{formErrors.surname}</p>
 
             <div>
               <label htmlFor="birthday">Doğum Tarihi</label>
               <input
-                className="input-center"
+                className="inputCenter"
                 type="date"
                 id="birthday"
                 name="birthday"
@@ -181,7 +181,7 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.birthday}</p>
+            <p className="signUpError">{formErrors.birthday}</p>
 
             <button
               onClick={(e) => {
@@ -208,7 +208,7 @@ export function SignUp() {
               <label htmlFor="tcNo">TC Kimlik Numarası</label>
               <input
                 autoFocus
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="tcNo"
                 name="tcNo"
@@ -216,12 +216,12 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.tcNo}</p>
+            <p className="signUpError">{formErrors.tcNo}</p>
 
             <div>
               <label htmlFor="phoneNo">Cep Telefon Numarası</label>
               <input
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="phoneNo"
                 name="phoneNo"
@@ -229,7 +229,7 @@ export function SignUp() {
                 onChange={handleChange}
               ></input>
             </div>
-            <p className="errorValue">{formErrors.phoneNo}</p>
+            <p className="signUpError">{formErrors.phoneNo}</p>
 
             <div className="checkBoxes">
               <input

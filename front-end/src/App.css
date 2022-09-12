@@ -31,7 +31,7 @@ nav button {
   font-weight: bold;
   font-size: 18px;
   margin: 20px;
-  background-color: rgb(255, 255, 255);
+  background-color: #fff;
   color: #10743c;
 }
 
@@ -45,7 +45,8 @@ body {
   margin-top: 10px;
   margin-bottom: 40px;
   font-style: italic;
-  font-size: 15px;
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .center {
@@ -58,13 +59,19 @@ body {
   margin: 0 auto;
 }
 
-.input-center {
+.inputCenter {
   position: relative;
   width: 300px;
   height: 40px;
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
+  text-indent: 8px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #80bc04;
 }
 
 button {
@@ -99,16 +106,7 @@ label {
   font-style: normal;
 }
 
-input {
-  text-indent: 8px;
-}
-
-input:focus {
-  outline-color: #80bc04;
-  outline-width: 1px;
-}
-
-.errorValue {
+.signUpError {
   position: relative;
   color: #ff4444;
   text-align: left;
@@ -118,8 +116,17 @@ input:focus {
   width: 300px;
 }
 
-.nameSurname-btn {
-  background-color: rgb(255, 255, 255);
+.loginError {
+  position: relative;
+  color: #ff4444;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.25;
+  width: 300px;
+}
+
+.nameSurnameButton {
+  background-color: #fff;
   position: absolute;
   top: 0;
   right: 0;
@@ -131,15 +138,11 @@ input:focus {
   color: #10743c;
 }
 
-.profile-icon {
-  background-color: rgb(255, 255, 255);
+.profileIcon {
+  background-color: #fff;
   position: absolute;
-  top: 22.5px;
+  top: 25px;
   right: 120px;
-  width: 35px;
-  height: 35px;
-}
-
-.deneme {
-  margin: 0;
+  width: 30px;
+  height: 30px;
 }

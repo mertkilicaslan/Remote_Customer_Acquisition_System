@@ -12,6 +12,7 @@ let incomingData = {};
 export function Login() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [showCustomerPage, setShowCustomerPage] = useState(false);
+  const [loginFail, setLoginFail] = useState(false);
   const [formValues, setFormValues] = useState(initalValues);
 
   const handleChange = (e) => {
@@ -29,31 +30,39 @@ export function Login() {
       <main>
         {showLoginPage && (
           <form className="center">
-            <p className="greetings">İnternet bankacılığına giriş yap</p>
+            <p className="greetings">Giriş Yap</p>
             <div>
               <label htmlFor="email">E-Mail</label>
               <input
                 autoFocus
-                className="input-center"
+                className="inputCenter"
                 type="text"
                 id="email"
                 name="email"
                 value={formValues.email}
                 onChange={handleChange}
+                style={{ border: loginFail ? "1px solid red" : "" }}
               ></input>
             </div>
 
             <div>
               <label htmlFor="password">Şifre</label>
               <input
-                className="input-center"
+                className="inputCenter"
                 type="password"
                 id="password"
                 name="password"
                 value={formValues.password}
                 onChange={handleChange}
+                style={{ border: loginFail ? "1px solid red" : "" }}
               ></input>
             </div>
+
+            <p className="loginError">
+              {loginFail
+                ? "Lütfen şifrenizi veya emailinizi kontrol edin!"
+                : ""}
+            </p>
 
             <button
               onClick={(e) => {
@@ -73,9 +82,13 @@ export function Login() {
                     console.log(data);
                     incomingData = data;
                     setShowLoginPage(false);
+                    setLoginFail(false);
                     setShowCustomerPage(true);
                   })
-                  .catch((err) => console.log(err));
+                  .catch((err) => {
+                    console.log(err);
+                    setLoginFail(true);
+                  });
               }}
             >
               Giriş yap
@@ -85,10 +98,12 @@ export function Login() {
 
         {showCustomerPage && (
           <>
-            <img src={icon} alt="profile-icon" className="profile-icon"></img>
-            <button className="nameSurname-btn">
-              {incomingData.name + "  " + incomingData.surname}
-            </button>
+            <div>
+              <img src={icon} alt="profile icon" className="profileIcon"></img>
+              <button className="nameSurnameButton">
+                {incomingData.name + "  " + incomingData.surname}
+              </button>
+            </div>
             <div className="center">
               <p className="greetings">
                 Hoş Geldiniz
