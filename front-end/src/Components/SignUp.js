@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import TermsConditions from "./TermsConditions";
+import { PatternFormat } from "react-number-format";
 
 const initalValues = {
   email: "",
@@ -25,6 +26,7 @@ export function SignUp() {
   const [hasatKart, setHasatKart] = useState(false);
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
+  const [phoneObj, setPhoneObj] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +39,7 @@ export function SignUp() {
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/;
     const regexTcNo = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
     const regexPhoneNo =
-      /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
+      /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
     if (showMailPass) {
       if (!values.email) {
@@ -74,7 +76,7 @@ export function SignUp() {
       } else if (!regexTcNo.test(values.tcNo)) {
         errors.tcNo = "TC Kimlik Numaranızı kontrol edin.";
       }
-      if (!values.phoneNo) {
+      if (values.phoneNo[5] == "_") {
         errors.phoneNo = "Lütfen cep telefon numaranızı giriniz.";
       } else if (!regexPhoneNo.test(values.phoneNo)) {
         errors.phoneNo = "Cep telefon numaranızı kontrol edin.";
@@ -85,9 +87,10 @@ export function SignUp() {
   };
 
   useEffect(() => {
+    formValues.phoneNo = phoneObj.formattedValue;
     //console.log("error", formErrors);
     //console.log("value", formValues);
-  }, [formErrors, formValues, doesConfirm, hasatKart, signUpSuccessful]);
+  }, [formErrors, formValues, phoneObj]);
 
   return (
     <>
@@ -220,14 +223,17 @@ export function SignUp() {
 
             <div>
               <label htmlFor="phoneNo">Cep Telefon Numarası</label>
-              <input
+              <PatternFormat
+                format="+90 (###) ### ####"
+                allowEmptyFormatting
+                mask="_"
                 className="inputCenter"
-                type="text"
                 id="phoneNo"
                 name="phoneNo"
-                value={formValues.phoneNo}
-                onChange={handleChange}
-              ></input>
+                onValueChange={(values, sourceInfo) => {
+                  setPhoneObj(values);
+                }}
+              />
             </div>
             <p className="signUpError">{formErrors.phoneNo}</p>
 
@@ -267,7 +273,6 @@ export function SignUp() {
                 </p>
               </TermsConditions>
             </div>
-
             <div className="checkBoxes">
               <input
                 type="checkbox"
@@ -284,7 +289,6 @@ export function SignUp() {
               ></input>
               <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
             </div>
-
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -328,7 +332,7 @@ export function SignUp() {
             <p>
               {signUpSuccessful
                 ? "Müşterimiz olduğunuz için teşekkür ederiz. "
-                : "Anasayfaya dönün ve lütfen tekrar deneyin."}
+                : "Anasayfaya dönün ve tekrar deneyin."}
             </p>
             <Link to="/">
               <button

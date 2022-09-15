@@ -41,7 +41,7 @@ body {
 }
 
 .greetings {
-  display: relative;
+  position: relative;
   margin-top: 10px;
   margin-bottom: 40px;
   font-style: italic;
@@ -126,23 +126,41 @@ label {
 }
 
 .nameSurnameButton {
-  background-color: #fff;
   position: absolute;
   top: 0;
   right: 0;
+
+  text-align: center;
   width: 100px;
   height: 40px;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 18px;
   margin: 20px;
+  background-color: #fff;
   color: #10743c;
 }
 
 .profileIcon {
   background-color: #fff;
   position: absolute;
-  top: 25px;
+  top: 22.5px;
   right: 120px;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.center .assets {
+  background-color: #94bb47;
+  position: relative;
+  width: 100px;
+  height: 20px;
+  padding: 50px 75px 75px 75px;
+  border-radius: 8px;
+  text-align: left;
+  display: table;
+  margin: 15px;
+}
+
+.phone {
+  border: none;
 }

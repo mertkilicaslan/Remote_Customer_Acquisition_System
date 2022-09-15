@@ -98,17 +98,24 @@ export function Login() {
 
         {showCustomerPage && (
           <>
-            <div>
-              <img src={icon} alt="profile icon" className="profileIcon"></img>
-              <button className="nameSurnameButton">
-                {incomingData.name + "  " + incomingData.surname}
-              </button>
-            </div>
+            <img src={icon} alt="profile icon" className="profileIcon"></img>
+            <button className="nameSurnameButton">
+              {incomingData.name + "  " + incomingData.surname}
+            </button>
+
             <div className="center">
               <p className="greetings">
                 Hoş Geldiniz
                 {"  " + incomingData.name + "  " + incomingData.surname}
               </p>
+              <hr></hr>
+              <p>Varlıklarım</p>
+              <div className="assets">
+                <p>Banka Kartı</p>
+              </div>
+              <div className="assets">
+                <p>Kredi Kartı</p>
+              </div>
             </div>
           </>
         )}
