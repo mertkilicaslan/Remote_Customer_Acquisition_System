@@ -109,12 +109,14 @@ export function Login() {
                 {"  " + incomingData.name + "  " + incomingData.surname}
               </p>
               <hr></hr>
-              <p>Varlıklarım</p>
+              <h2>Varlıklarım</h2>
               <div className="assets">
                 <p>Banka Kartı</p>
+                <p className="balance">265,00 TL</p>
               </div>
               <div className="assets">
                 <p>Kredi Kartı</p>
+                <p className="balance">394,00 TL</p>
               </div>
             </div>
           </>

@@ -151,16 +151,23 @@ label {
 
 .center .assets {
   background-color: #94bb47;
+  display: inline-table;
   position: relative;
-  width: 100px;
-  height: 20px;
-  padding: 50px 75px 75px 75px;
-  border-radius: 8px;
   text-align: left;
-  display: table;
+  width: 250px;
+  height: 125px;
+  border-radius: 8px;
   margin: 15px;
 }
+.center .assets p {
+  margin: 10px;
+  font-style: oblique;
+}
 
-.phone {
-  border: none;
+.center .assets p + p {
+  margin: 25px;
+  text-align: center;
+  font-size: 22px;
+  font-style: normal;
+  color: #fff;
 }
