@@ -16,16 +16,18 @@ const initalValues = {
 };
 
 export function SignUp() {
-  const [showMailPass, setShowPage1] = useState(true);
-  const [showNameSurnameDate, setShowPage2] = useState(false);
-  const [showPhoneTC, setShowPage3] = useState(false);
-  const [showSuccessPage, setShowPage4] = useState(false);
-  const [popUpTermsConditions, setShowPopUp] = useState(false);
+  const [showEmailPass, setShowEmailPass] = useState(true);
+  const [showNameSurnameDate, setShowNameSurnameDate] = useState(false);
+  const [showPhoneTC, setShowPhoneTC] = useState(false);
+  const [showEndingPage, setShowEndingPage] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [popUpConfirm, setPopUpConfirm] = useState(false);
   const [signUpSuccessful, setSignUpSuccessful] = useState(false);
-  const [doesConfirm, setConfirm] = useState(false);
   const [hasatKart, setHasatKart] = useState(false);
+
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
+
   const [phoneObj, setPhoneObj] = useState({});
 
   const handleChange = (e) => {
@@ -41,7 +43,7 @@ export function SignUp() {
     const regexPhoneNo =
       /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
-    if (showMailPass) {
+    if (showEmailPass) {
       if (!values.email) {
         errors.email = "Lütfen e-mail adresinizi giriniz.";
       } else if (!regexEmail.test(values.email)) {
@@ -95,7 +97,7 @@ export function SignUp() {
   return (
     <>
       <main>
-        {showMailPass && (
+        {showEmailPass && (
           <form className="center">
             <p className="greetings">Müşterimiz Ol</p>
             <div>
@@ -134,8 +136,8 @@ export function SignUp() {
                   setFormErrors(errors);
                 } else {
                   setFormErrors({});
-                  setShowPage1(false);
-                  setShowPage2(true);
+                  setShowEmailPass(false);
+                  setShowNameSurnameDate(true);
                 }
               }}
             >
@@ -195,8 +197,8 @@ export function SignUp() {
                   setFormErrors(errors);
                 } else {
                   setFormErrors({});
-                  setShowPage2(false);
-                  setShowPage3(true);
+                  setShowNameSurnameDate(false);
+                  setShowPhoneTC(true);
                 }
               }}
             >
@@ -244,9 +246,9 @@ export function SignUp() {
                 name="checkbox1"
                 value="uzaktanMusteri"
                 required
-                checked={doesConfirm}
+                checked={popUpConfirm}
                 onChange={(e) => {
-                  setConfirm(false);
+                  setPopUpConfirm(false);
                   if (e.target.checked) {
                     setShowPopUp(true);
                   }
@@ -256,10 +258,10 @@ export function SignUp() {
                 Uzaktan Müşteri Edinimi Aydınlatma Metni
               </label>
               <TermsConditions
-                trigger={popUpTermsConditions}
+                trigger={showPopUp}
                 setTrigger={setShowPopUp}
-                trigger2={doesConfirm}
-                setTrigger2={setConfirm}
+                trigger2={popUpConfirm}
+                setTrigger2={setPopUpConfirm}
               >
                 <h2> Ayıdnlatma Metni</h2>
                 <p>
@@ -294,7 +296,7 @@ export function SignUp() {
                 e.preventDefault();
                 const errors = validate(formValues);
 
-                if (Object.keys(errors).length || !doesConfirm) {
+                if (Object.keys(errors).length || !popUpConfirm) {
                   setFormErrors(errors);
                 } else {
                   setFormErrors({});
@@ -313,8 +315,8 @@ export function SignUp() {
                     .then((data) => console.log(data))
                     .catch((err) => console.log(err))
                     .finally(() => {
-                      setShowPage3(false);
-                      setShowPage4(true);
+                      setShowPhoneTC(false);
+                      setShowEndingPage(true);
                     });
                 }
               }}
@@ -324,7 +326,7 @@ export function SignUp() {
           </form>
         )}
 
-        {showSuccessPage && (
+        {showEndingPage && (
           <div className="center">
             <h1>
               {signUpSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
@@ -337,7 +339,7 @@ export function SignUp() {
             <Link to="/">
               <button
                 onClick={(e) => {
-                  setShowPage4(false);
+                  setShowEndingPage(false);
                 }}
               >
                 Anasayfa
