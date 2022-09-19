@@ -83,6 +83,9 @@ export function SignUp() {
       } else if (!regexPhoneNo.test(values.phoneNo)) {
         errors.phoneNo = "Cep telefon numaranızı kontrol edin.";
       }
+      if (!popUpConfirm) {
+        errors.popUp = "Müşteri olmak için sözleşmeyi onaylamalısınız.";
+      }
     }
 
     return errors;
@@ -110,6 +113,11 @@ export function SignUp() {
                 name="email"
                 value={formValues.email}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.email
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.email}</p>
@@ -123,6 +131,11 @@ export function SignUp() {
                 name="password"
                 value={formValues.password}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.password
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.password}</p>
@@ -158,6 +171,11 @@ export function SignUp() {
                 name="name"
                 value={formValues.name}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.name
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.name}</p>
@@ -171,6 +189,11 @@ export function SignUp() {
                 name="surname"
                 value={formValues.surname}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.surname
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.surname}</p>
@@ -184,6 +207,11 @@ export function SignUp() {
                 name="birthday"
                 value={formValues.birthday}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.birthday
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.birthday}</p>
@@ -219,6 +247,11 @@ export function SignUp() {
                 name="tcNo"
                 value={formValues.tcNo}
                 onChange={handleChange}
+                style={{
+                  border: formErrors.tcNo
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               ></input>
             </div>
             <p className="signUpError">{formErrors.tcNo}</p>
@@ -235,6 +268,11 @@ export function SignUp() {
                 onValueChange={(values, sourceInfo) => {
                   setPhoneObj(values);
                 }}
+                style={{
+                  border: formErrors.phoneNo
+                    ? "1px solid #ff4444"
+                    : "1px solid #80bc04",
+                }}
               />
             </div>
             <p className="signUpError">{formErrors.phoneNo}</p>
@@ -242,10 +280,26 @@ export function SignUp() {
             <div className="checkBoxes">
               <input
                 type="checkbox"
+                id="hasatKart"
+                name="checkbox2"
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setHasatKart(true);
+                  } else {
+                    setHasatKart(false);
+                  }
+                  formValues["hasatKart"] = (!hasatKart).toString();
+                }}
+              ></input>
+              <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
+            </div>
+
+            <div className="checkBoxes">
+              <input
+                type="checkbox"
                 id="uzaktanMusteri"
                 name="checkbox1"
                 value="uzaktanMusteri"
-                required
                 checked={popUpConfirm}
                 onChange={(e) => {
                   setPopUpConfirm(false);
@@ -257,6 +311,7 @@ export function SignUp() {
               <label htmlFor="uzaktanMusteri">
                 Uzaktan Müşteri Edinimi Aydınlatma Metni
               </label>
+
               <TermsConditions
                 trigger={showPopUp}
                 setTrigger={setShowPopUp}
@@ -275,22 +330,8 @@ export function SignUp() {
                 </p>
               </TermsConditions>
             </div>
-            <div className="checkBoxes">
-              <input
-                type="checkbox"
-                id="hasatKart"
-                name="checkbox2"
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setHasatKart(true);
-                  } else {
-                    setHasatKart(false);
-                  }
-                  formValues["hasatKart"] = (!hasatKart).toString();
-                }}
-              ></input>
-              <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
-            </div>
+            <p className="signUpError">{formErrors.popUp}</p>
+
             <button
               onClick={(e) => {
                 e.preventDefault();

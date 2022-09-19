@@ -62,7 +62,7 @@ body {
 .inputCenter {
   position: relative;
   width: 300px;
-  height: 40px;
+  height: 38px;
   border-radius: 8px;
   border-style: solid;
   border-width: 1px;
@@ -71,7 +71,8 @@ body {
 
 input:focus {
   outline: none;
-  border-color: #80bc04;
+  border-color: #80bc04 !important;
+  border-width: 2px;
 }
 
 button {
@@ -101,23 +102,25 @@ label {
   padding-top: 3px;
   display: flex;
 }
+
 .checkBoxes label {
   margin: 0px -2px 0px 2px;
   font-style: normal;
 }
 
 .signUpError {
-  position: relative;
+  position: static;
   color: #ff4444;
   text-align: left;
   font-size: 12px;
   line-height: 1.25;
   margin: 5px 5px 10px 5px;
   width: 300px;
+  text-indent: 2px;
 }
 
 .loginError {
-  position: relative;
+  position: static;
   color: #ff4444;
   text-align: center;
   font-size: 12px;

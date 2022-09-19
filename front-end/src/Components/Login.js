@@ -41,7 +41,9 @@ export function Login() {
                 name="email"
                 value={formValues.email}
                 onChange={handleChange}
-                style={{ border: loginFail ? "1px solid red" : "" }}
+                style={{
+                  border: loginFail ? "1px solid #ff4444" : "1px solid #80bc04",
+                }}
               ></input>
             </div>
 
@@ -54,7 +56,9 @@ export function Login() {
                 name="password"
                 value={formValues.password}
                 onChange={handleChange}
-                style={{ border: loginFail ? "1px solid red" : "" }}
+                style={{
+                  border: loginFail ? "1px solid #ff4444" : "1px solid #80bc04",
+                }}
               ></input>
             </div>
 
