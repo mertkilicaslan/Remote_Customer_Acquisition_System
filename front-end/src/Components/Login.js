@@ -11,7 +11,8 @@ let incomingData = {};
 
 export function Login() {
   const [showLoginPage, setShowLoginPage] = useState(true);
-  const [showCustomerPage, setShowCustomerPage] = useState(false);
+  const [showAssetsPage, setShowAssetsPage] = useState(false);
+  const [showMiniProfile, setShowMiniProfile] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
   const [formValues, setFormValues] = useState(initalValues);
 
@@ -87,10 +88,10 @@ export function Login() {
                     incomingData = data;
                     setShowLoginPage(false);
                     setLoginFail(false);
-                    setShowCustomerPage(true);
+                    setShowAssetsPage(true);
                   })
                   .catch((err) => {
-                    console.log(err);
+                    //console.log(err);
                     setLoginFail(true);
                   });
               }}
@@ -100,12 +101,41 @@ export function Login() {
           </form>
         )}
 
-        {showCustomerPage && (
+        {showAssetsPage && (
           <>
             <img src={icon} alt="profile icon" className="profileIcon"></img>
-            <button className="nameSurnameButton">
+            <button
+              className="nameSurnameButton"
+              onClick={() => setShowMiniProfile(!showMiniProfile)}
+            >
               {incomingData.name + "  " + incomingData.surname}
             </button>
+
+            {showMiniProfile && (
+              <section className="miniProfile">
+                <h3>Profil Bilgilerim</h3>
+                <ul>
+                  <li>
+                    <strong>Telefon No: </strong>
+                    {incomingData.phoneNo}
+                  </li>
+                  <li>
+                    <strong>T.C. Kimlik No: </strong>
+                    {incomingData.tcNo}
+                  </li>
+                  <li>
+                    <strong>Doğum Tarihi: </strong>
+                    {incomingData.birthday}
+                  </li>
+                  <li>
+                    <strong>Hasat Kart</strong>
+                    {incomingData.hasatKart === "false"
+                      ? "'a sahip değilsiniz."
+                      : "'a sahipsiniz."}
+                  </li>
+                </ul>
+              </section>
+            )}
 
             <div className="center">
               <p className="greetings">
@@ -113,6 +143,7 @@ export function Login() {
                 {"  " + incomingData.name + "  " + incomingData.surname}
               </p>
               <hr></hr>
+
               <h2>Varlıklarım</h2>
               <div className="assets">
                 <p>Banka Kartı</p>

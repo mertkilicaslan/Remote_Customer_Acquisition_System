@@ -162,6 +162,7 @@ label {
   border-radius: 8px;
   margin: 15px;
 }
+
 .center .assets p {
   margin: 10px;
   font-style: oblique;
@@ -173,4 +174,29 @@ label {
   font-size: 22px;
   font-style: normal;
   color: #fff;
+}
+
+.miniProfile {
+  background-color: #fff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  position: absolute;
+  top: 70px;
+  right: 0;
+
+  width: 250px;
+  height: 140px;
+  color: #10743c;
+}
+
+.miniProfile li {
+  padding: 2px;
+}
+
+.miniProfile h3 {
+  text-indent: 20px;
+  margin-bottom: -5px;
+  font-size: 15px;
+  text-decoration: underline;
 }
