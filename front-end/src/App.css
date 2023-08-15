@@ -200,3 +200,34 @@ label {
   font-size: 15px;
   text-decoration: underline;
 }
+
+/* New styles for the Assets component */
+
+.balanceActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.balanceActions button,
+.balanceActions p.balance {
+  flex: 1;
+  text-align: center;
+  margin: 10px 15px;
+}
+
+.balanceActions button {
+  background-color: #a1df24;
+  color: #fff;
+  font-size: 25px;
+  padding: 5px 10px;
+  width: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.balanceActions button:hover {
+  background-color: #588404;
+}

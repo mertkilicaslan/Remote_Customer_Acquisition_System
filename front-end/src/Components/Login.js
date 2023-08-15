@@ -1,6 +1,7 @@
 import "../App.css";
 import icon from "../Assets/icon.png";
 import React, { useState, useEffect } from "react";
+import Assets from "./Assets";
 
 const initalValues = {
   email: "",
@@ -137,23 +138,9 @@ export function Login() {
               </section>
             )}
 
-            <div className="center">
-              <p className="greetings">
-                Hoş Geldiniz
-                {"  " + incomingData.name + "  " + incomingData.surname}
-              </p>
-              <hr></hr>
-
-              <h2>Varlıklarım</h2>
-              <div className="assets">
-                <p>Banka Kartı</p>
-                <p className="balance">265,00 TL</p>
-              </div>
-              <div className="assets">
-                <p>Kredi Kartı</p>
-                <p className="balance">394,00 TL</p>
-              </div>
-            </div>
+            {showAssetsPage && (
+              <Assets name={incomingData.name} surname={incomingData.surname} />
+            )}
           </>
         )}
       </main>
