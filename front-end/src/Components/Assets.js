@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Assets({ name, surname }) {
+const Assets = ({ name, surname }) => {
   const [bankBalance, setBankBalance] = useState(265);
   const [creditBalance, setCreditBalance] = useState(394);
 
@@ -35,6 +35,6 @@ function Assets({ name, surname }) {
       </div>
     </div>
   );
-}
+};
 
 export default Assets;

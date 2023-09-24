@@ -1,10 +1,12 @@
 import { Link, Route, Routes } from "react-router-dom";
-import { Home } from "./Components/Home";
-import { SignUp } from "./Components/SignUp";
-import { Login } from "./Components/Login";
+
+import Home from "./components/Home";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <>
       <nav>
@@ -19,6 +21,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;
