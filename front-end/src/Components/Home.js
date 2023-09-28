@@ -1,9 +1,9 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "../App.css";
-import { Login } from "./Login";
-import { SignUp } from "./SignUp";
+import Login from "./Login";
+import Signup from "./Signup";
 
-export function Home() {
+const Home = () => {
   return (
     <>
       <div className="center">
@@ -19,8 +19,10 @@ export function Home() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );
-}
+};
+
+export default Home;
