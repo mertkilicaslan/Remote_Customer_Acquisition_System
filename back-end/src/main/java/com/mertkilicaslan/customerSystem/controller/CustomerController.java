@@ -8,54 +8,62 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mertkilicaslan.customerSystem.dto.CreateCustomerRequest;
-import com.mertkilicaslan.customerSystem.dto.CreateCustomerResponse;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
+import com.mertkilicaslan.customerSystem.dto.NewCustomerResponse;
 import com.mertkilicaslan.customerSystem.service.CustomerService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
- * The controller for Remote Customer Acquisition endpoints.
- * This class handles the SignUp and Login operations for Customers.
+ * The controller for Remote Customer Acquisition end points. This class handles
+ * the SignUp and Login operations for Customers.
+ * 
  * @author Mert Kılıçaslan
- *
+ * @see http://localhost:8080/swagger-ui/ for swagger documentation
  */
+
+@Tag(name = "Customer Controller", description = "API Documentation for Remote Customer Acquisition System")
 @RestController
 @RequestMapping("/customer")
-@Api(value = "API Documentation for Remote Customer Acquisition System")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
-	
-    private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
+	private final CustomerService customerService;
+
+	public CustomerController(CustomerService customerService) {
 		this.customerService = customerService;
 	}
 
 	/**
-     * Create a new Customer object and add it to the database with the data provided.
-     *
-     * @param customer a JSON representation of Customer object.
-     * @return "Successful" message if the Customer object successfully added to database.
-     */
-    @PostMapping("/signup")
-    @ApiOperation(value = "Customers' information for registration")
-    public ResponseEntity<CreateCustomerResponse> createNewCustomer(@RequestBody CreateCustomerRequest request){
-    	return new ResponseEntity<CreateCustomerResponse>(customerService.createNewCustomer(request), HttpStatus.CREATED);
-    }
+	 * Create a new Customer object and add it to the database with the data
+	 * provided.
+	 *
+	 * @param request a representation of NewCustomerRequest containing the details
+	 *                for the new customer.
+	 * @return ResponseEntity containing a "isSuccess" boolean if the Customer
+	 *         object is successfully added to the database and the status code.
+	 */
+	@PostMapping("/signup")
+	@Operation(summary = "Register a new customer", description = "Receives customer information for registration")
+	public ResponseEntity<NewCustomerResponse> createNewCustomer(@RequestBody NewCustomerRequest request) {
+		return new ResponseEntity<NewCustomerResponse>(customerService.createNewCustomer(request), HttpStatus.CREATED);
+	}
 
-    /**
-     * Read the existing Customer object from database.
-     *
-     * @param customer a JSON representation of Customer object with non-empty password and e-mail provided.
-     * @return the existing Customer object credentials if customer does exist in the database.
-     */
-    @PostMapping("/login")
-    @ApiOperation(value = "Customers' information for system login")
-    public ResponseEntity<CustomerLoginResponse> getCustomerInformation(@RequestBody CustomerLoginRequest request){
-        return new ResponseEntity<CustomerLoginResponse>(customerService.getCustomerInformation(request), HttpStatus.OK);
-    }
+	/**
+	 * Authenticate and fetch the existing Customer object from the database.
+	 *
+	 * @param request a representation of CustomerLoginRequest containing the
+	 *                required login credentials like email and password.
+	 * @return ResponseEntity containing the details of the logged-in customer if
+	 *         they exist in the database and the status code.
+	 */
+	@PostMapping("/login")
+	@Operation(summary = "Authenticate and fetch customer information", description = "Receives customer credentials for system login")
+	public ResponseEntity<CustomerLoginResponse> getCustomerInformation(@RequestBody CustomerLoginRequest request) {
+		return new ResponseEntity<CustomerLoginResponse>(customerService.getCustomerInformation(request),
+				HttpStatus.OK);
+	}
 }
