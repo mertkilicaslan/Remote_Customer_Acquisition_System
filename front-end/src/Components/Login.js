@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Assets from "./Assets";
+import { loginCustomer } from "../api/CustomerApi";
 
 import "../App.css";
 import icon from "../assets/icon.png";
@@ -68,26 +69,16 @@ const Login = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-
-              fetch("http://localhost:8080/customer/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formValues),
-              })
-                .then((res) => {
-                  if (res.ok && res.status === 200) {
-                    return res.json();
+              loginCustomer(formValues)
+                .then((data) => {
+                  if (data.isSuccess) {
+                    setShowLoginPage(false);
+                    setLoginFail(false);
+                    setShowAssetsPage(true);
                   }
                 })
-                .then((data) => {
-                  console.log(data);
-                  incomingData = data;
-                  setShowLoginPage(false);
-                  setLoginFail(false);
-                  setShowAssetsPage(true);
-                })
                 .catch((err) => {
-                  //console.log(err);
+                  console.log(err);
                   setLoginFail(true);
                 });
             }}

@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 
 import Home from "./components/Home";
-import SignUp from "./components/SignUp";
+import Signup from "./components/Signup";
 import Login from "./components/Login";
 
 import "./App.css";
@@ -16,7 +16,7 @@ const App = () => {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </>

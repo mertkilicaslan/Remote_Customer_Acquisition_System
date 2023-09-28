@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "../App.css";
 import Login from "./Login";
-import SignUp from "./SignUp";
+import Signup from "./Signup";
 
 const Home = () => {
   return (
@@ -19,7 +19,7 @@ const Home = () => {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );

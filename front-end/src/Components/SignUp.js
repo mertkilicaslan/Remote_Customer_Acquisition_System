@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { signupCustomer } from "../api/CustomerApi";
+
 import { PatternFormat } from "react-number-format";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   validateEmailPass,
@@ -9,7 +12,6 @@ import {
 } from "../utils/Validator";
 
 import TermsConditions from "./TermsConditions";
-
 import "../App.css";
 
 const initalValues = {
@@ -20,22 +22,24 @@ const initalValues = {
   birthday: "",
   tcNo: "",
   phoneNo: "",
-  hasatKart: "false",
+  hasatKartPreference: false,
 };
-const SignUp = () => {
+const Signup = () => {
   const [showEmailPass, setShowEmailPass] = useState(true);
   const [showNameSurnameDate, setShowNameSurnameDate] = useState(false);
   const [showPhoneTC, setShowPhoneTC] = useState(false);
-  const [showEndingPage, setShowEndingPage] = useState(false);
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [showEndingModal, setShowEndingModal] = useState(false);
+
+  const [showPopup, setShowPopup] = useState(false);
   const [termsConfirm, setTermsConfirm] = useState(false);
 
-  const [signUpSuccessful, setSignUpSuccessful] = useState(false);
+  const [signupSuccessful, setSignupSuccessful] = useState(false);
   const [hasatKart, setHasatKart] = useState(false);
 
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
 
+  const [loading, setLoading] = useState(false);
   const [phoneObj, setPhoneObj] = useState({});
 
   const handleChange = (e) => {
@@ -195,6 +199,7 @@ const SignUp = () => {
               id="tcNo"
               name="tcNo"
               value={formValues.tcNo}
+              disabled={loading}
               onChange={handleChange}
               style={{
                 border: formErrors.tcNo
@@ -214,6 +219,7 @@ const SignUp = () => {
               className="inputCenter"
               id="phoneNo"
               name="phoneNo"
+              disabled={loading}
               onValueChange={(values) => {
                 setPhoneObj(values);
               }}
@@ -231,9 +237,10 @@ const SignUp = () => {
               type="checkbox"
               id="hasatKart"
               name="checkbox2"
+              disabled={loading}
               onChange={(e) => {
                 e.target.checked ? setHasatKart(true) : setHasatKart(false);
-                formValues["hasatKart"] = (!hasatKart).toString();
+                formValues.hasatKartPreference = !hasatKart;
               }}
             ></input>
             <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
@@ -245,11 +252,12 @@ const SignUp = () => {
               id="uzaktanMusteri"
               name="checkbox1"
               value="uzaktanMusteri"
+              disabled={loading}
               checked={termsConfirm}
               onChange={(e) => {
                 setTermsConfirm(false);
                 if (e.target.checked) {
-                  setShowPopUp(true);
+                  setShowPopup(true);
                 }
               }}
             ></input>
@@ -258,14 +266,24 @@ const SignUp = () => {
             </label>
 
             <TermsConditions
-              showPopUp={showPopUp}
-              setShowPopUp={setShowPopUp}
+              showPopup={showPopup}
+              setShowPopup={setShowPopup}
               setTermsConfirm={setTermsConfirm}
             />
           </div>
           <p className="signUpError">{formErrors.popUp}</p>
 
+          {loading && (
+            <ClipLoader
+              color="#80bc04"
+              loading={loading}
+              size={50}
+              speedMultiplier={0.75}
+            />
+          )}
+
           <button
+            disabled={loading}
             onClick={(e) => {
               e.preventDefault();
               const errors = validatePhoneTC(formValues, termsConfirm);
@@ -274,23 +292,21 @@ const SignUp = () => {
                 setFormErrors(errors);
               } else {
                 setFormErrors({});
+                setLoading(true);
 
-                fetch("http://localhost:8080/customer/signup", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(formValues),
-                })
-                  .then((res) => {
-                    if (res.ok && res.status === 200) {
-                      setSignUpSuccessful(true);
-                      return res;
+                signupCustomer(formValues)
+                  .then((data) => {
+                    if (data.isSuccess) {
+                      setSignupSuccessful(true);
                     }
                   })
-                  .then((data) => console.log(data))
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    console.log(err);
+                  })
                   .finally(() => {
+                    setLoading(false);
                     setShowPhoneTC(false);
-                    setShowEndingPage(true);
+                    setShowEndingModal(true);
                   });
               }
             }}
@@ -300,18 +316,24 @@ const SignUp = () => {
         </form>
       )}
 
-      {showEndingPage && (
+      {showEndingModal && (
         <div className="center">
           <h1>
-            {signUpSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
+            {signupSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
           </h1>
           <p>
-            {signUpSuccessful
+            {signupSuccessful
               ? "Müşterimiz olduğunuz için teşekkür ederiz. "
               : "Anasayfaya dönün ve tekrar deneyin."}
           </p>
           <Link to="/">
-            <button onClick={() => setShowEndingPage(false)}>Anasayfa</button>
+            <button
+              onClick={() => {
+                setShowEndingModal(false);
+              }}
+            >
+              Anasayfa
+            </button>
           </Link>
         </div>
       )}
@@ -319,4 +341,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;
