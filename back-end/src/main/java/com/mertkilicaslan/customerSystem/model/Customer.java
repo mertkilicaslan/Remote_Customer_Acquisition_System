@@ -1,109 +1,58 @@
 package com.mertkilicaslan.customerSystem.model;
 
-import com.mertkilicaslan.customerSystem.config.AesEncryptor;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import javax.persistence.*;
+import com.mertkilicaslan.customerSystem.config.AesEncryptor;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 @Entity(name = "customer")
-@ApiModel(value = "CustomerObject")
+@Data
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(unique = true)
-    @ApiModelProperty(value="Customers' email")
-    private String email;
-    @Convert(converter = AesEncryptor.class)
-    @ApiModelProperty(value="Customers' password")
-    private String password;
-    @ApiModelProperty(value="Customers' name")
-    private String name;
-    @ApiModelProperty(value="Customers' surname")
-    private String surname;
-    @ApiModelProperty(value="Customers' birthday")
-    private String birthday;
-    @ApiModelProperty(value="Customers' national ID")
-    private String tcNo;
-    @Convert(converter = AesEncryptor.class)
-    @ApiModelProperty(value="Customers' telephone")
-    private String phoneNo;
-    @ApiModelProperty(value="Customers' hasat kart preferences")
-    private String hasatKart;
 
-    public Customer() {
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private int id;
 
-    public int getId() {
-        return id;
-    }
+	@Column(name = "EMAIL", unique = true)
+	@ApiModelProperty(value = "Customer email")
+	private String email;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@Convert(converter = AesEncryptor.class)
+	@Column(name = "PASSWORD")
+	@ApiModelProperty(value = "Customer password")
+	private String password;
 
-    public String getEmail() {
-        return email;
-    }
+	@Column(name = "NAME")
+	@ApiModelProperty(value = "Customer name")
+	private String name;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	@Column(name = "SURNAME")
+	@ApiModelProperty(value = "Customer surname")
+	private String surname;
 
-    public String getPassword() {
-        return password;
-    }
+	@Column(name = "BIRTHDAY")
+	@ApiModelProperty(value = "Customer birthday")
+	private String birthday;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	@Column(name = "TC_NO")
+	@ApiModelProperty(value = "Customers national ID")
+	private String tcNo;
 
-    public String getName() {
-        return name;
-    }
+	@Convert(converter = AesEncryptor.class)
+	@Column(name = "PHONE_NO")
+	@ApiModelProperty(value = "Customers telephone")
+	private String phoneNo;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(name = "HK_PREF")
+	@ApiModelProperty(value = "Customers hasat kart preferences")
+	private Boolean hasatKartPreference;
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getTcNo() {
-        return tcNo;
-    }
-
-    public void setTcNo(String tcNo) {
-        this.tcNo = tcNo;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getHasatKart() {
-        return hasatKart;
-    }
-
-    public void setHasatKart(String hasatKart) {
-        this.hasatKart = hasatKart;
-    }
 }
