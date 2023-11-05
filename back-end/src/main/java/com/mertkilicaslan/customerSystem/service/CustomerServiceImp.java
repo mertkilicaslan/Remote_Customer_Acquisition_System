@@ -1,9 +1,11 @@
 package com.mertkilicaslan.customerSystem.service;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.mertkilicaslan.customerSystem.common.CustomerConstants;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
 import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
@@ -23,67 +25,51 @@ public class CustomerServiceImp implements CustomerService {
 
 	@Override
 	public NewCustomerResponse createNewCustomer(NewCustomerRequest request) {
-		NewCustomerResponse response = new NewCustomerResponse();
-		response.setIsSuccess(false);
-
 		if (!isValidCustomerInformation(request)) {
-			return response;
+			throw new IllegalArgumentException("Customer information is not valid!");
 		}
+		
+		customerRepository.findByEmail(request.getEmail()).ifPresent(c -> {
+			throw new DataIntegrityViolationException("User already exists with email: " + c.getEmail());
+		});
 
-		Optional<Customer> optionalCustomer = customerRepository.findByEmail(request.getEmail());
-		if (optionalCustomer.isPresent()) {
-			return response;
-		}
+		customerRepository.save(CustomerMapper.toEntity(request));
 
-		Customer customer = CustomerMapper.toEntity(request);
-		customerRepository.save(customer);
+		NewCustomerResponse response = new NewCustomerResponse();
 		response.setIsSuccess(true);
 		return response;
 	}
 
 	@Override
 	public CustomerLoginResponse getCustomerInformation(CustomerLoginRequest request) {
-		CustomerLoginResponse response = new CustomerLoginResponse();
-		response.setIsSuccess(false);
-
-		if (!isValidEmail(request.getEmail()) && !isValidPassword(request.getPassword())) {
-			return response;
+		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
+			throw new IllegalArgumentException("Email or password is not valid!");
 		}
 
-		Optional<Customer> optionalCustomer = customerRepository.findByEmailAndPassword(request.getEmail(),
-				request.getPassword());
-		if (optionalCustomer.isEmpty()) {
-			return response;
-		}
+		Customer customer = customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
+				.orElseThrow(() -> new NoSuchElementException("Email or password is not correct!"));
 
-		response = CustomerMapper.entityToResponse(optionalCustomer.get());
+		CustomerLoginResponse response = CustomerMapper.entityToResponse(customer);
 		response.setIsSuccess(true);
 		return response;
 	}
 
 	boolean isValidCustomerInformation(NewCustomerRequest request) {
-		if (request.getEmail() == null || request.getEmail().isBlank() || !isValidEmail(request.getEmail())) {
-			return false;
-		}
-		if (request.getPassword() == null || request.getPassword().isBlank()
-				|| !isValidPassword(request.getPassword())) {
+		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
 			return false;
 		}
 		return request.getName() != null && !request.getName().isBlank() && request.getSurname() != null
 				&& !request.getSurname().isBlank() && request.getBirthday() != null && !request.getBirthday().isBlank()
 				&& request.getTcNo() != null && !request.getTcNo().isBlank() && request.getPhoneNo() != null
 				&& !request.getPhoneNo().isBlank() && request.getHasatKartPreference() != null;
-
 	}
 
-	private boolean isValidEmail(String email) {
-		// RegEx: Basic email validation
-		return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
+	private boolean isValidEmailFormat(String email) {
+		return email != null && !email.isBlank() && email.matches(CustomerConstants.EMAIL_REGEX);
 	}
 
-	private boolean isValidPassword(String password) {
-		// RegEx: Password must be at least 8 characters with 1 number
-		return password.length() >= 8 && password.matches(".*\\d.*");
+	private boolean isValidPasswordFormat(String password) {
+		return password != null && !password.isBlank() && password.matches(CustomerConstants.PASSWORD_REGEX);
 	}
 
 }
