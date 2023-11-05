@@ -40,7 +40,7 @@ body {
   justify-content: center;
 }
 
-.greetings {
+.greetings-message {
   position: relative;
   margin-top: 10px;
   margin-bottom: 40px;
@@ -59,7 +59,9 @@ body {
   margin: 0 auto;
 }
 
-.inputCenter {
+.center input[type="text"],
+.center input[type="password"],
+.center input[type="date"] {
   position: relative;
   width: 300px;
   height: 38px;
@@ -103,17 +105,17 @@ label {
   font-style: oblique;
 }
 
-.checkBoxes {
+.checkbox-container {
   padding-top: 3px;
   display: flex;
 }
 
-.checkBoxes label {
+.checkbox-container label {
   margin: 0px -2px 0px 2px;
   font-style: normal;
 }
 
-.signUpError {
+.signup-error {
   position: static;
   color: #ff4444;
   text-align: left;
@@ -124,7 +126,7 @@ label {
   text-indent: 2px;
 }
 
-.loginError {
+.login-error {
   position: static;
   color: #ff4444;
   text-align: center;
@@ -133,7 +135,8 @@ label {
   width: 300px;
 }
 
-.nameSurnameButton {
+/* Styles for Assets component */
+.profile-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -148,10 +151,10 @@ label {
   color: #10743c;
 }
 
-.profileIcon {
+.profile-icon {
   background-color: #fff;
   position: absolute;
-  top: 22.5px;
+  top: 5px;
   right: 120px;
   width: 35px;
   height: 35px;
@@ -181,7 +184,37 @@ label {
   color: #fff;
 }
 
-.miniProfile {
+.balance-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.balance-actions button,
+.balance-actions p.balance {
+  flex: 1;
+  text-align: center;
+  margin: 10px 15px;
+}
+
+.balance-actions button {
+  background-color: #a1df24;
+  color: #fff;
+  font-size: 25px;
+  padding: 5px 10px;
+  width: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.balance-actions button:hover {
+  background-color: #588404;
+}
+
+/* Styles for Mini Profile component */
+.mini-profile {
   background-color: #fff;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -195,44 +228,57 @@ label {
   color: green;
 }
 
-.miniProfile li {
+.mini-profile li {
   padding: 2px;
 }
 
-.miniProfile h3 {
+.mini-profile h3 {
   text-indent: 20px;
   margin-bottom: -5px;
   font-size: 15px;
   text-decoration: underline;
 }
 
-/* New styles for the Assets component */
-
-.balanceActions {
+/* Styles for TermsConditions component */
+.terms-conditions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
 }
 
-.balanceActions button,
-.balanceActions p.balance {
-  flex: 1;
+.terms-conditions-inner {
+  position: relative;
+  border-radius: 8px;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  background-color: white;
   text-align: center;
-  margin: 10px 15px;
 }
 
-.balanceActions button {
-  background-color: #a1df24;
-  color: #fff;
-  font-size: 25px;
-  padding: 5px 10px;
-  width: 10px;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s;
+.terms-conditions-inner .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border: 0;
+  background-color: #80bc04;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
 }
 
-.balanceActions button:hover {
+.terms-conditions-inner .close-button:hover {
   background-color: #588404;
+}
+.terms-conditions-inner button {
+  display: inline;
 }

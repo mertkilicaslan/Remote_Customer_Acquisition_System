@@ -1,5 +1,4 @@
 import React from "react";
-import "./TermsConditions.css";
 import "../App.css";
 
 import { termsConditionsText } from "../utils/Constants";
@@ -15,8 +14,8 @@ const TermsConditions = (props) => {
   return (
     showPopup && (
       <>
-        <div className="termsConditions">
-          <div className="termsConditions-inner">
+        <div className="terms-conditions">
+          <div className="terms-conditions-inner">
             <button className="close-button" onClick={() => closePopUp(false)}>
               &#10006;
             </button>
