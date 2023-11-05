@@ -55,12 +55,11 @@ const Signup = () => {
     <>
       {showEmailPass && (
         <form className="center">
-          <p className="greetings">Müşterimiz Ol</p>
+          <p className="greetings-message">Müşterimiz Ol</p>
           <div>
             <label htmlFor="email">E-Mail</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="email"
               name="email"
@@ -73,12 +72,11 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.email}</p>
+          <p className="signup-error">{formErrors.email}</p>
 
           <div>
             <label htmlFor="password">Şifre</label>
             <input
-              className="inputCenter"
               type="password"
               id="password"
               name="password"
@@ -91,7 +89,7 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.password}</p>
+          <p className="signup-error">{formErrors.password}</p>
 
           <button
             onClick={(e) => {
@@ -118,7 +116,6 @@ const Signup = () => {
             <label htmlFor="name">Ad</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="name"
               name="name"
@@ -131,12 +128,11 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.name}</p>
+          <p className="signup-error">{formErrors.name}</p>
 
           <div>
             <label htmlFor="surname">Soyad</label>
             <input
-              className="inputCenter"
               type="text"
               id="surname"
               name="surname"
@@ -149,12 +145,11 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.surname}</p>
+          <p className="signup-error">{formErrors.surname}</p>
 
           <div>
             <label htmlFor="birthday">Doğum Tarihi</label>
             <input
-              className="inputCenter"
               type="date"
               id="birthday"
               name="birthday"
@@ -167,7 +162,7 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.birthday}</p>
+          <p className="signup-error">{formErrors.birthday}</p>
 
           <button
             onClick={(e) => {
@@ -194,7 +189,6 @@ const Signup = () => {
             <label htmlFor="tcNo">TC Kimlik Numarası</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="tcNo"
               name="tcNo"
@@ -208,7 +202,7 @@ const Signup = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.tcNo}</p>
+          <p className="signup-error">{formErrors.tcNo}</p>
 
           <div>
             <label htmlFor="phoneNo">Cep Telefon Numarası</label>
@@ -216,7 +210,6 @@ const Signup = () => {
               format="+90 (###) ### ####"
               allowEmptyFormatting
               mask="_"
-              className="inputCenter"
               id="phoneNo"
               name="phoneNo"
               disabled={loading}
@@ -230,9 +223,9 @@ const Signup = () => {
               }}
             />
           </div>
-          <p className="signUpError">{formErrors.phoneNo}</p>
+          <p className="signup-error">{formErrors.phoneNo}</p>
 
-          <div className="checkBoxes">
+          <div className="checkbox-container">
             <input
               type="checkbox"
               id="hasatKart"
@@ -246,7 +239,7 @@ const Signup = () => {
             <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
           </div>
 
-          <div className="checkBoxes">
+          <div className="checkbox-container">
             <input
               type="checkbox"
               id="uzaktanMusteri"
@@ -271,7 +264,7 @@ const Signup = () => {
               setTermsConfirm={setTermsConfirm}
             />
           </div>
-          <p className="signUpError">{formErrors.popUp}</p>
+          <p className="signup-error">{formErrors.popUp}</p>
 
           {loading && (
             <ClipLoader

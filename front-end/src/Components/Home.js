@@ -7,7 +7,9 @@ const Home = () => {
   return (
     <>
       <div className="center">
-        <p className="greetings">İnternet Bankacılığına Hoş Geldiniz!</p>
+        <p className="greetings-message">
+          İnternet Bankacılığına Hoş Geldiniz!
+        </p>
         <Link to="/login">
           <button>Giriş Yap</button>
         </Link>
