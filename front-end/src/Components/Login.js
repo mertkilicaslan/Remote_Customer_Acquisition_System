@@ -1,40 +1,36 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Assets from "./Assets";
+import MiniProfile from "./MiniProfile";
+import { loginCustomer } from "../api/CustomerApi";
 
 import "../App.css";
 import icon from "../assets/icon.png";
-
-const initalValues = {
-  email: "",
-  password: "",
-};
-
-let incomingData = {};
 
 const Login = () => {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [showAssetsPage, setShowAssetsPage] = useState(false);
   const [showMiniProfile, setShowMiniProfile] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
-  const [formValues, setFormValues] = useState(initalValues);
+  const [userInformation, setUserInformation] = useState({});
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  useEffect(() => {}, [formValues]);
-
   return (
     <>
       {showLoginPage && (
         <form className="center">
-          <p className="greetings">Giriş Yap</p>
+          <p className="greetings-message">Giriş Yap</p>
           <div>
             <label htmlFor="email">E-Mail</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="email"
               name="email"
@@ -49,7 +45,6 @@ const Login = () => {
           <div>
             <label htmlFor="password">Şifre</label>
             <input
-              className="inputCenter"
               type="password"
               id="password"
               name="password"
@@ -61,35 +56,30 @@ const Login = () => {
             ></input>
           </div>
 
-          <p className="loginError">
+          <p className="login-error">
             {loginFail ? "Lütfen şifrenizi veya emailinizi kontrol edin!" : ""}
           </p>
 
           <button
             onClick={(e) => {
               e.preventDefault();
-
-              fetch("http://localhost:8080/customer/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formValues),
-              })
-                .then((res) => {
-                  if (res.ok && res.status === 200) {
-                    return res.json();
-                  }
-                })
-                .then((data) => {
-                  console.log(data);
-                  incomingData = data;
-                  setShowLoginPage(false);
-                  setLoginFail(false);
-                  setShowAssetsPage(true);
-                })
-                .catch((err) => {
-                  //console.log(err);
-                  setLoginFail(true);
-                });
+              if (formValues.email && formValues.password) {
+                setLoginFail(false);
+                loginCustomer(formValues)
+                  .then((data) => {
+                    if (data.isSuccess) {
+                      setUserInformation(data);
+                      setShowLoginPage(false);
+                      setShowAssetsPage(true);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    setLoginFail(true);
+                  });
+              } else {
+                setLoginFail(true);
+              }
             }}
           >
             Giriş yap
@@ -99,42 +89,20 @@ const Login = () => {
 
       {showAssetsPage && (
         <>
-          <img src={icon} alt="profile icon" className="profileIcon"></img>
           <button
-            className="nameSurnameButton"
+            className="profile-button"
             onClick={() => setShowMiniProfile(!showMiniProfile)}
           >
-            {incomingData.name + "  " + incomingData.surname}
+            <img src={icon} alt="profile icon" className="profile-icon "></img>
+            {userInformation.name + "  " + userInformation.surname}
           </button>
 
-          {showMiniProfile && (
-            <section className="miniProfile">
-              <h3>Profil Bilgilerim</h3>
-              <ul>
-                <li>
-                  <strong>Telefon No: </strong>
-                  {incomingData.phoneNo}
-                </li>
-                <li>
-                  <strong>T.C. Kimlik No: </strong>
-                  {incomingData.tcNo}
-                </li>
-                <li>
-                  <strong>Doğum Tarihi: </strong>
-                  {incomingData.birthday}
-                </li>
-                <li>
-                  <strong>Hasat Kart</strong>
-                  {incomingData.hasatKart === "false"
-                    ? "'a sahip değilsiniz."
-                    : "'a sahipsiniz."}
-                </li>
-              </ul>
-            </section>
-          )}
-
+          {showMiniProfile && <MiniProfile userInformation={userInformation} />}
           {showAssetsPage && (
-            <Assets name={incomingData.name} surname={incomingData.surname} />
+            <Assets
+              name={userInformation.name}
+              surname={userInformation.surname}
+            />
           )}
         </>
       )}

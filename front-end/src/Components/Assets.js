@@ -6,7 +6,7 @@ const Assets = ({ name, surname }) => {
 
   return (
     <div className="center">
-      <p className="greetings">
+      <p className="greetings-message">
         Hoş Geldiniz {name} {surname}
       </p>
       <hr />
@@ -14,21 +14,29 @@ const Assets = ({ name, surname }) => {
       <h2>Varlıklarım</h2>
       <div className="assets">
         <p>Banka Kartı</p>
-        <div className="balanceActions">
-          <button onClick={() => setBankBalance((prev) => prev - 1)}>-</button>
+        <div className="balance-actions">
+          <button onClick={() => setBankBalance((prevState) => prevState - 1)}>
+            -
+          </button>
           <p className="balance">{bankBalance},00&nbsp;TL</p>
-          <button onClick={() => setBankBalance((prev) => prev + 1)}>+</button>
+          <button onClick={() => setBankBalance((prevState) => prevState + 1)}>
+            +
+          </button>
         </div>
       </div>
 
       <div className="assets">
         <p>Kredi Kartı</p>
-        <div className="balanceActions">
-          <button onClick={() => setCreditBalance((prev) => prev - 1)}>
+        <div className="balance-actions">
+          <button
+            onClick={() => setCreditBalance((prevState) => prevState - 1)}
+          >
             -
           </button>
           <p className="balance">{creditBalance},00&nbsp;TL</p>
-          <button onClick={() => setCreditBalance((prev) => prev + 1)}>
+          <button
+            onClick={() => setCreditBalance((prevState) => prevState + 1)}
+          >
             +
           </button>
         </div>

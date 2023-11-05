@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { signupCustomer } from "../api/CustomerApi";
+
 import { PatternFormat } from "react-number-format";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import {
   validateEmailPass,
@@ -9,7 +12,6 @@ import {
 } from "../utils/Validator";
 
 import TermsConditions from "./TermsConditions";
-
 import "../App.css";
 
 const initalValues = {
@@ -20,22 +22,24 @@ const initalValues = {
   birthday: "",
   tcNo: "",
   phoneNo: "",
-  hasatKart: "false",
+  hasatKartPreference: false,
 };
-const SignUp = () => {
+const Signup = () => {
   const [showEmailPass, setShowEmailPass] = useState(true);
   const [showNameSurnameDate, setShowNameSurnameDate] = useState(false);
   const [showPhoneTC, setShowPhoneTC] = useState(false);
-  const [showEndingPage, setShowEndingPage] = useState(false);
-  const [showPopUp, setShowPopUp] = useState(false);
+  const [showEndingModal, setShowEndingModal] = useState(false);
+
+  const [showPopup, setShowPopup] = useState(false);
   const [termsConfirm, setTermsConfirm] = useState(false);
 
-  const [signUpSuccessful, setSignUpSuccessful] = useState(false);
+  const [signupSuccessful, setSignupSuccessful] = useState(false);
   const [hasatKart, setHasatKart] = useState(false);
 
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
 
+  const [loading, setLoading] = useState(false);
   const [phoneObj, setPhoneObj] = useState({});
 
   const handleChange = (e) => {
@@ -51,12 +55,11 @@ const SignUp = () => {
     <>
       {showEmailPass && (
         <form className="center">
-          <p className="greetings">Müşterimiz Ol</p>
+          <p className="greetings-message">Müşterimiz Ol</p>
           <div>
             <label htmlFor="email">E-Mail</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="email"
               name="email"
@@ -69,12 +72,11 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.email}</p>
+          <p className="signup-error">{formErrors.email}</p>
 
           <div>
             <label htmlFor="password">Şifre</label>
             <input
-              className="inputCenter"
               type="password"
               id="password"
               name="password"
@@ -87,7 +89,7 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.password}</p>
+          <p className="signup-error">{formErrors.password}</p>
 
           <button
             onClick={(e) => {
@@ -114,7 +116,6 @@ const SignUp = () => {
             <label htmlFor="name">Ad</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="name"
               name="name"
@@ -127,12 +128,11 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.name}</p>
+          <p className="signup-error">{formErrors.name}</p>
 
           <div>
             <label htmlFor="surname">Soyad</label>
             <input
-              className="inputCenter"
               type="text"
               id="surname"
               name="surname"
@@ -145,12 +145,11 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.surname}</p>
+          <p className="signup-error">{formErrors.surname}</p>
 
           <div>
             <label htmlFor="birthday">Doğum Tarihi</label>
             <input
-              className="inputCenter"
               type="date"
               id="birthday"
               name="birthday"
@@ -163,7 +162,7 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.birthday}</p>
+          <p className="signup-error">{formErrors.birthday}</p>
 
           <button
             onClick={(e) => {
@@ -190,11 +189,11 @@ const SignUp = () => {
             <label htmlFor="tcNo">TC Kimlik Numarası</label>
             <input
               autoFocus
-              className="inputCenter"
               type="text"
               id="tcNo"
               name="tcNo"
               value={formValues.tcNo}
+              disabled={loading}
               onChange={handleChange}
               style={{
                 border: formErrors.tcNo
@@ -203,7 +202,7 @@ const SignUp = () => {
               }}
             ></input>
           </div>
-          <p className="signUpError">{formErrors.tcNo}</p>
+          <p className="signup-error">{formErrors.tcNo}</p>
 
           <div>
             <label htmlFor="phoneNo">Cep Telefon Numarası</label>
@@ -211,9 +210,9 @@ const SignUp = () => {
               format="+90 (###) ### ####"
               allowEmptyFormatting
               mask="_"
-              className="inputCenter"
               id="phoneNo"
               name="phoneNo"
+              disabled={loading}
               onValueChange={(values) => {
                 setPhoneObj(values);
               }}
@@ -224,32 +223,34 @@ const SignUp = () => {
               }}
             />
           </div>
-          <p className="signUpError">{formErrors.phoneNo}</p>
+          <p className="signup-error">{formErrors.phoneNo}</p>
 
-          <div className="checkBoxes">
+          <div className="checkbox-container">
             <input
               type="checkbox"
               id="hasatKart"
               name="checkbox2"
+              disabled={loading}
               onChange={(e) => {
                 e.target.checked ? setHasatKart(true) : setHasatKart(false);
-                formValues["hasatKart"] = (!hasatKart).toString();
+                formValues.hasatKartPreference = !hasatKart;
               }}
             ></input>
             <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
           </div>
 
-          <div className="checkBoxes">
+          <div className="checkbox-container">
             <input
               type="checkbox"
               id="uzaktanMusteri"
               name="checkbox1"
               value="uzaktanMusteri"
+              disabled={loading}
               checked={termsConfirm}
               onChange={(e) => {
                 setTermsConfirm(false);
                 if (e.target.checked) {
-                  setShowPopUp(true);
+                  setShowPopup(true);
                 }
               }}
             ></input>
@@ -258,14 +259,24 @@ const SignUp = () => {
             </label>
 
             <TermsConditions
-              showPopUp={showPopUp}
-              setShowPopUp={setShowPopUp}
+              showPopup={showPopup}
+              setShowPopup={setShowPopup}
               setTermsConfirm={setTermsConfirm}
             />
           </div>
-          <p className="signUpError">{formErrors.popUp}</p>
+          <p className="signup-error">{formErrors.popUp}</p>
+
+          {loading && (
+            <ClipLoader
+              color="#80bc04"
+              loading={loading}
+              size={50}
+              speedMultiplier={0.75}
+            />
+          )}
 
           <button
+            disabled={loading}
             onClick={(e) => {
               e.preventDefault();
               const errors = validatePhoneTC(formValues, termsConfirm);
@@ -274,23 +285,21 @@ const SignUp = () => {
                 setFormErrors(errors);
               } else {
                 setFormErrors({});
+                setLoading(true);
 
-                fetch("http://localhost:8080/customer/signup", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(formValues),
-                })
-                  .then((res) => {
-                    if (res.ok && res.status === 200) {
-                      setSignUpSuccessful(true);
-                      return res;
+                signupCustomer(formValues)
+                  .then((data) => {
+                    if (data.isSuccess) {
+                      setSignupSuccessful(true);
                     }
                   })
-                  .then((data) => console.log(data))
-                  .catch((err) => console.log(err))
+                  .catch((err) => {
+                    console.log(err);
+                  })
                   .finally(() => {
+                    setLoading(false);
                     setShowPhoneTC(false);
-                    setShowEndingPage(true);
+                    setShowEndingModal(true);
                   });
               }
             }}
@@ -300,18 +309,24 @@ const SignUp = () => {
         </form>
       )}
 
-      {showEndingPage && (
+      {showEndingModal && (
         <div className="center">
           <h1>
-            {signUpSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
+            {signupSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
           </h1>
           <p>
-            {signUpSuccessful
+            {signupSuccessful
               ? "Müşterimiz olduğunuz için teşekkür ederiz. "
               : "Anasayfaya dönün ve tekrar deneyin."}
           </p>
           <Link to="/">
-            <button onClick={() => setShowEndingPage(false)}>Anasayfa</button>
+            <button
+              onClick={() => {
+                setShowEndingModal(false);
+              }}
+            >
+              Anasayfa
+            </button>
           </Link>
         </div>
       )}
@@ -319,4 +334,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;
