@@ -3,13 +3,14 @@ package com.mertkilicaslan.customerSystem.service;
 import com.mertkilicaslan.customerSystem.common.CustomerConstants;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerResponse;
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.mapper.CustomerMapper;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.NoSuchElementException;
 
@@ -23,8 +24,8 @@ public class CustomerServiceImp implements CustomerService {
 	}
 
 	@Override
-	public NewCustomerResponse createNewCustomer(NewCustomerRequest request) {
-		if (!isValidCustomerInformation(request)) {
+	public CustomerRegisterResponse createNewCustomer(CustomerRegisterRequest request) {
+		if (request == null || !isValidCustomerInformation(request)) {
 			throw new IllegalArgumentException(CustomerConstants.CUSTOMER_CREDENTIALS_INVALID);
 		}
 		
@@ -34,14 +35,14 @@ public class CustomerServiceImp implements CustomerService {
 
 		customerRepository.save(CustomerMapper.toEntity(request));
 
-		NewCustomerResponse response = new NewCustomerResponse();
+		CustomerRegisterResponse response = new CustomerRegisterResponse();
 		response.setIsSuccess(true);
 		return response;
 	}
 
 	@Override
 	public CustomerLoginResponse getCustomerInformation(CustomerLoginRequest request) {
-		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
+		if (request == null || !isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
 			throw new IllegalArgumentException(CustomerConstants.EMAIL_PASSWORD_INVALID);
 		}
 
@@ -53,22 +54,21 @@ public class CustomerServiceImp implements CustomerService {
 		return response;
 	}
 
-	private boolean isValidCustomerInformation(NewCustomerRequest request) {
+	private boolean isValidCustomerInformation(CustomerRegisterRequest request) {
 		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
 			return false;
 		}
-		return request.getName() != null && !request.getName().isBlank() && request.getSurname() != null
-				&& !request.getSurname().isBlank() && request.getBirthday() != null && !request.getBirthday().isBlank()
-				&& request.getTcNo() != null && !request.getTcNo().isBlank() && request.getPhoneNo() != null
-				&& !request.getPhoneNo().isBlank() && request.getHasatKartPreference() != null;
+		return StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
+				&& StringUtils.hasText(request.getBirthday()) && StringUtils.hasText(request.getTcNo())
+				&& StringUtils.hasText(request.getPhoneNo()) && request.getHasatKartPreference() != null;
 	}
 
 	private boolean isValidEmailFormat(String email) {
-		return email != null && !email.isBlank() && email.matches(CustomerConstants.EMAIL_REGEX);
+		return StringUtils.hasText(email) && email.matches(CustomerConstants.EMAIL_REGEX);
 	}
 
 	private boolean isValidPasswordFormat(String password) {
-		return password != null && !password.isBlank() && password.matches(CustomerConstants.PASSWORD_REGEX);
+		return StringUtils.hasText(password) && password.matches(CustomerConstants.PASSWORD_REGEX);
 	}
 
 }

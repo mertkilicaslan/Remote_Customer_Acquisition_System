@@ -1,5 +1,6 @@
 package com.mertkilicaslan.customerSystem.controller;
 
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerResponse;
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
 import com.mertkilicaslan.customerSystem.service.CustomerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,15 +41,15 @@ public class CustomerController {
 	 * Create a new Customer object and add it to the database with the data
 	 * provided.
 	 *
-	 * @param request a representation of NewCustomerRequest containing the details
+	 * @param request a representation of CustomerRegisterRequest containing the details
 	 *                for the new customer.
 	 * @return ResponseEntity containing a "isSuccess" boolean if the Customer
 	 *         object is successfully added to the database and the status code.
 	 */
 	@PostMapping("/signup")
 	@Operation(summary = "Register a new customer", description = "Receives customer information for registration")
-	public ResponseEntity<NewCustomerResponse> createNewCustomer(@RequestBody NewCustomerRequest request) {
-		return new ResponseEntity<NewCustomerResponse>(customerService.createNewCustomer(request), HttpStatus.CREATED);
+	public ResponseEntity<CustomerRegisterResponse> createNewCustomer(@RequestBody CustomerRegisterRequest request) {
+		return new ResponseEntity<CustomerRegisterResponse>(customerService.createNewCustomer(request), HttpStatus.CREATED);
 	}
 
 	/**

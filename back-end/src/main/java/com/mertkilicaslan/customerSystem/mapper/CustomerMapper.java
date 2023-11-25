@@ -1,12 +1,12 @@
 package com.mertkilicaslan.customerSystem.mapper;
 
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
 import com.mertkilicaslan.customerSystem.model.Customer;
 
 public class CustomerMapper {
 
-	public final static Customer toEntity(NewCustomerRequest request) {
+	public final static Customer toEntity(CustomerRegisterRequest request) {
 		if (request == null) {
 			return null;
 		}

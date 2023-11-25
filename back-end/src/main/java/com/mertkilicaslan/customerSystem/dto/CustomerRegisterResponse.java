@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "NewCustomerResponse", description = "Success status response after a customer's sign up attempt")
-public class NewCustomerResponse {
+@ApiModel(value = "CustomerRegisterResponse", description = "Success status response after a customer's sign up attempt")
+public class CustomerRegisterResponse {
 	Boolean isSuccess;
 }
