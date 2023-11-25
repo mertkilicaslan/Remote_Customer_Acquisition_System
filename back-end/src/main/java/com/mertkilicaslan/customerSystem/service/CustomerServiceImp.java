@@ -55,12 +55,10 @@ public class CustomerServiceImp implements CustomerService {
 	}
 
 	private boolean isValidCustomerInformation(CustomerRegisterRequest request) {
-		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
-			return false;
-		}
-		return StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
-				&& StringUtils.hasText(request.getBirthday()) && StringUtils.hasText(request.getTcNo())
-				&& StringUtils.hasText(request.getPhoneNo()) && request.getHasatKartPreference() != null;
+		return isValidEmailFormat(request.getEmail()) && isValidPasswordFormat(request.getPassword())
+				&& StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
+				&& StringUtils.hasText(request.getTcNo()) && StringUtils.hasText(request.getPhoneNo())
+				&& request.getBirthday() != null && request.getHasatKartPreference() != null;
 	}
 
 	private boolean isValidEmailFormat(String email) {

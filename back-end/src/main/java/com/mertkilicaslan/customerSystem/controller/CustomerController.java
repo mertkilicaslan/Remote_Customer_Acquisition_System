@@ -49,7 +49,7 @@ public class CustomerController {
 	@PostMapping("/signup")
 	@Operation(summary = "Register a new customer", description = "Receives customer information for registration")
 	public ResponseEntity<CustomerRegisterResponse> createNewCustomer(@RequestBody CustomerRegisterRequest request) {
-		return new ResponseEntity<CustomerRegisterResponse>(customerService.createNewCustomer(request), HttpStatus.CREATED);
+		return new ResponseEntity<>(customerService.createNewCustomer(request), HttpStatus.CREATED);
 	}
 
 	/**
@@ -63,7 +63,6 @@ public class CustomerController {
 	@PostMapping("/login")
 	@Operation(summary = "Authenticate and fetch customer information", description = "Receives customer credentials for system login")
 	public ResponseEntity<CustomerLoginResponse> getCustomerInformation(@RequestBody CustomerLoginRequest request) {
-		return new ResponseEntity<CustomerLoginResponse>(customerService.getCustomerInformation(request),
-				HttpStatus.OK);
+		return new ResponseEntity<>(customerService.getCustomerInformation(request), HttpStatus.OK);
 	}
 }
