@@ -46,9 +46,7 @@ class CustomerServiceImpTest {
         CustomerRegisterRequest request = validCustomerRegisterRequest();
         request.setEmail(null);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            service.createNewCustomer(request);
-        });
+        assertThrows(IllegalArgumentException.class, () -> service.createNewCustomer(request));
     }
 
     @Test
@@ -56,9 +54,7 @@ class CustomerServiceImpTest {
         CustomerRegisterRequest request = validCustomerRegisterRequest();
         when(customerRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(new Customer()));
 
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            service.createNewCustomer(request);
-        });
+        assertThrows(DataIntegrityViolationException.class, () -> service.createNewCustomer(request));
     }
 
     @Test
@@ -80,9 +76,7 @@ class CustomerServiceImpTest {
         CustomerLoginRequest request = validCustomerLoginRequest();
         request.setPassword(null);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            service.getCustomerInformation(request);
-        });
+        assertThrows(IllegalArgumentException.class, () -> service.getCustomerInformation(request));
     }
 
     @Test
@@ -91,9 +85,7 @@ class CustomerServiceImpTest {
         when(customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword()))
                 .thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> {
-            service.getCustomerInformation(request);
-        });
+        assertThrows(NoSuchElementException.class, () -> service.getCustomerInformation(request));
     }
 
     private CustomerRegisterRequest validCustomerRegisterRequest() {
