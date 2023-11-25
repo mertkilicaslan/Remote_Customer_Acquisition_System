@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "NewCustomerRequest", description = "Detailed information about a customer for system registration")
-public class NewCustomerRequest {
+@ApiModel(value = "CustomerRegisterRequest", description = "Detailed information about a customer for system registration")
+public class CustomerRegisterRequest {
 	String email;
 	String password;
 	String name;

@@ -7,9 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "CustomerLoginResponse", description = "Response data after a customer's login attempt, containing user details and success status")
-public class CustomerLoginResponse {
-	Boolean isSuccess;
-	
+public class CustomerLoginResponse extends BaseResponse{
 	String email;
 	String name;
 	String surname;
