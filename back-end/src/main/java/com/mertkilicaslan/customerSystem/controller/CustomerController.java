@@ -20,9 +20,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 /**
  * The controller for Remote Customer Acquisition end points. This class handles
  * the Signup and Login operations for Customers.
- * 
+ *
  * @author Mert Kılıçaslan
- * @see http://localhost:8080/swagger-ui/ for swagger documentation
+ * @see <a href="http://localhost:8080/swagger-ui/">Swagger documentation</a>
  */
 
 @Tag(name = "Customer Controller", description = "API Documentation for Remote Customer Acquisition System")

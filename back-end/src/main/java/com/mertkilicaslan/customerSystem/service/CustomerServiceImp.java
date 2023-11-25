@@ -1,10 +1,5 @@
 package com.mertkilicaslan.customerSystem.service;
 
-import java.util.NoSuchElementException;
-
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-
 import com.mertkilicaslan.customerSystem.common.CustomerConstants;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
@@ -13,6 +8,10 @@ import com.mertkilicaslan.customerSystem.dto.NewCustomerResponse;
 import com.mertkilicaslan.customerSystem.mapper.CustomerMapper;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
@@ -26,11 +25,11 @@ public class CustomerServiceImp implements CustomerService {
 	@Override
 	public NewCustomerResponse createNewCustomer(NewCustomerRequest request) {
 		if (!isValidCustomerInformation(request)) {
-			throw new IllegalArgumentException("Customer information is not valid!");
+			throw new IllegalArgumentException(CustomerConstants.CUSTOMER_CREDENTIALS_INVALID);
 		}
 		
 		customerRepository.findByEmail(request.getEmail()).ifPresent(c -> {
-			throw new DataIntegrityViolationException("User already exists with email: " + c.getEmail());
+			throw new DataIntegrityViolationException(CustomerConstants.CUSTOMER_ALREADY_EXIST + c.getEmail());
 		});
 
 		customerRepository.save(CustomerMapper.toEntity(request));
@@ -43,18 +42,18 @@ public class CustomerServiceImp implements CustomerService {
 	@Override
 	public CustomerLoginResponse getCustomerInformation(CustomerLoginRequest request) {
 		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
-			throw new IllegalArgumentException("Email or password is not valid!");
+			throw new IllegalArgumentException(CustomerConstants.EMAIL_PASSWORD_INVALID);
 		}
 
 		Customer customer = customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
-				.orElseThrow(() -> new NoSuchElementException("Email or password is not correct!"));
+				.orElseThrow(() -> new NoSuchElementException(CustomerConstants.EMAIL_PASSWORD_INCORRECT));
 
 		CustomerLoginResponse response = CustomerMapper.entityToResponse(customer);
 		response.setIsSuccess(true);
 		return response;
 	}
 
-	boolean isValidCustomerInformation(NewCustomerRequest request) {
+	private boolean isValidCustomerInformation(NewCustomerRequest request) {
 		if (!isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
 			return false;
 		}
