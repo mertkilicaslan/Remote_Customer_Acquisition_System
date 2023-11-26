@@ -27,13 +27,15 @@ class CustomerServiceTest {
 
     @InjectMocks
     CustomerServiceImp service;
+
     @Mock
     CustomerRepository repository;
+
     @Mock
     BalanceServiceImp balanceService;
 
     @Test
-    public void createNewCustomerSuccessfully_WhenRegisteredCredentialValid() {
+    void createNewCustomerSuccessfully_WhenRegisteredCredentialValid() {
         CustomerRegisterRequest request = validCustomerRegisterRequest();
         when(repository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
         when(repository.save(any(Customer.class))).thenReturn(new Customer());
@@ -46,7 +48,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    public void createNewCustomerShouldThrowError_WhenRegisteredCredentialInvalid() {
+    void createNewCustomerShouldThrowError_WhenRegisteredCredentialInvalid() {
         CustomerRegisterRequest request = validCustomerRegisterRequest();
         request.setEmail(null);
 
@@ -54,7 +56,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    public void createNewCustomerShouldThrowError_WhenRegisteredEmailExists() {
+    void createNewCustomerShouldThrowError_WhenRegisteredEmailExists() {
         CustomerRegisterRequest request = validCustomerRegisterRequest();
         when(repository.findByEmail(request.getEmail())).thenReturn(Optional.of(new Customer()));
 
@@ -62,7 +64,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    public void getCustomerInformationSuccessfully_WhenLoginCredentialCorrect() {
+    void getCustomerInformationSuccessfully_WhenLoginCredentialCorrect() {
         CustomerLoginRequest request = validCustomerLoginRequest();
         Customer mockCustomer = new Customer();
         mockCustomer.setEmail("mert@mert.com");
@@ -78,7 +80,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    public void getCustomerInformationShouldThrowError_WhenPassOrEmailInvalid() {
+    void getCustomerInformationShouldThrowError_WhenPassOrEmailInvalid() {
         CustomerLoginRequest request = validCustomerLoginRequest();
         request.setPassword(null);
 
@@ -86,7 +88,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    public void getCustomerInformationShouldThrowError_WhenPassEmailCombinationDoesNotExist() {
+    void getCustomerInformationShouldThrowError_WhenPassEmailCombinationDoesNotExist() {
         CustomerLoginRequest request = validCustomerLoginRequest();
         when(repository.findByEmailAndPassword(request.getEmail(), request.getPassword())).thenReturn(Optional.empty());
 

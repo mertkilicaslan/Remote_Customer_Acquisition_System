@@ -1,6 +1,5 @@
 package com.mertkilicaslan.customerSystem.model;
 
-import com.mertkilicaslan.customerSystem.config.AesEncryptor;
 import lombok.Data;
 
 import javax.persistence.*;
