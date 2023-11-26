@@ -6,6 +6,7 @@ import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
 import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.mapper.CustomerMapper;
+import com.mertkilicaslan.customerSystem.model.Balance;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,9 +19,11 @@ import java.util.NoSuchElementException;
 public class CustomerServiceImp implements CustomerService {
 
 	private final CustomerRepository customerRepository;
+	private final BalanceService balanceService;
 
-	public CustomerServiceImp(CustomerRepository customerRepository) {
+	public CustomerServiceImp(CustomerRepository customerRepository, BalanceService balanceService) {
 		this.customerRepository = customerRepository;
+		this.balanceService = balanceService;
 	}
 
 	@Override
@@ -33,7 +36,8 @@ public class CustomerServiceImp implements CustomerService {
 			throw new DataIntegrityViolationException(CustomerConstants.CUSTOMER_ALREADY_EXIST + c.getEmail());
 		});
 
-		customerRepository.save(CustomerMapper.toEntity(request));
+		Customer registeredCustomer = customerRepository.save(CustomerMapper.toEntity(request));
+		balanceService.createInitialBalanceForCustomer(registeredCustomer);
 
 		CustomerRegisterResponse response = new CustomerRegisterResponse();
 		response.setIsSuccess(true);
@@ -50,6 +54,9 @@ public class CustomerServiceImp implements CustomerService {
 				.orElseThrow(() -> new NoSuchElementException(CustomerConstants.EMAIL_PASSWORD_INCORRECT));
 
 		CustomerLoginResponse response = CustomerMapper.entityToResponse(customer);
+		Balance customerBalance = balanceService.getBalanceInformationForCustomer(customer);
+		response.setCreditBalance(customerBalance.getCreditBalance());
+		response.setDebitBalance(customerBalance.getDebitBalance());
 		response.setIsSuccess(true);
 		return response;
 	}

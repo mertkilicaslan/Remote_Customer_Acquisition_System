@@ -31,29 +31,12 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	/**
-	 * Create a new Customer object and add it to the database with the data
-	 * provided.
-	 *
-	 * @param request a representation of CustomerRegisterRequest containing the details
-	 *                for the new customer.
-	 * @return ResponseEntity containing a "isSuccess" boolean if the Customer
-	 *         object is successfully added to the database and the status code.
-	 */
 	@PostMapping("/signup")
 	@Operation(summary = "Register a new customer", description = "Receives customer information for registration")
 	public ResponseEntity<CustomerRegisterResponse> createNewCustomer(@RequestBody CustomerRegisterRequest request) {
 		return new ResponseEntity<>(customerService.createNewCustomer(request), HttpStatus.CREATED);
 	}
 
-	/**
-	 * Authenticate and fetch the existing Customer object from the database.
-	 *
-	 * @param request a representation of CustomerLoginRequest containing the
-	 *                required login credentials like email and password.
-	 * @return ResponseEntity containing the details of the logged-in customer if
-	 *         they exist in the database and the status code.
-	 */
 	@PostMapping("/login")
 	@Operation(summary = "Authenticate and fetch customer information", description = "Receives customer credentials for system login")
 	public ResponseEntity<CustomerLoginResponse> getCustomerInformation(@RequestBody CustomerLoginRequest request) {
