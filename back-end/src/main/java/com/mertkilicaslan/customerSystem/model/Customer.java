@@ -5,14 +5,15 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "customer")
 @Data
+@Entity
+@Table(name = "CUSTOMER")
 public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
+	private Long id;
 
 	@Column(name = "EMAIL", unique = true)
 	private String email;
@@ -41,3 +42,5 @@ public class Customer {
 	private Boolean hasatKartPreference;
 
 }
+
+
