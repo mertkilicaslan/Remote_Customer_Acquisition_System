@@ -1,21 +1,15 @@
 package com.mertkilicaslan.customerSystem.controller;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
 import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
 import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.service.CustomerService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The controller for Remote Customer Acquisition end points. This class handles

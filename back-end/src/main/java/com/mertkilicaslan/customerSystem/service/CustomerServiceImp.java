@@ -28,7 +28,7 @@ public class CustomerServiceImp implements CustomerService {
 		if (request == null || !isValidCustomerInformation(request)) {
 			throw new IllegalArgumentException(CustomerConstants.CUSTOMER_CREDENTIALS_INVALID);
 		}
-		
+
 		customerRepository.findByEmail(request.getEmail()).ifPresent(c -> {
 			throw new DataIntegrityViolationException(CustomerConstants.CUSTOMER_ALREADY_EXIST + c.getEmail());
 		});
@@ -58,7 +58,7 @@ public class CustomerServiceImp implements CustomerService {
 		return isValidEmailFormat(request.getEmail()) && isValidPasswordFormat(request.getPassword())
 				&& StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
 				&& StringUtils.hasText(request.getTcNo()) && StringUtils.hasText(request.getPhoneNo())
-				&& request.getBirthday() != null && request.getHasatKartPreference() != null;
+				&& StringUtils.hasText(request.getBirthday()) && request.getHasatKartPreference() != null;
 	}
 
 	private boolean isValidEmailFormat(String email) {
