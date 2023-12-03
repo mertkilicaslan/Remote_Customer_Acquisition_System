@@ -1,9 +1,9 @@
 package com.mertkilicaslan.customerSystem.service;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerLoginRequest;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.model.Balance;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
@@ -27,10 +27,8 @@ class CustomerServiceTest {
 
     @InjectMocks
     CustomerServiceImp service;
-
     @Mock
     CustomerRepository repository;
-
     @Mock
     BalanceServiceImp balanceService;
 

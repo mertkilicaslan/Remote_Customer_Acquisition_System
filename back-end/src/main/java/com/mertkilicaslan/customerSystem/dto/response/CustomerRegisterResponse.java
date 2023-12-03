@@ -1,4 +1,4 @@
-package com.mertkilicaslan.customerSystem.dto;
+package com.mertkilicaslan.customerSystem.dto.response;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;

@@ -21,7 +21,6 @@ class BalanceServiceTest {
 
     @InjectMocks
     BalanceServiceImp service;
-
     @Mock
     BalanceRepository repository;
 

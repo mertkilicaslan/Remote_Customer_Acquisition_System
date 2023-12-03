@@ -1,9 +1,11 @@
 package com.mertkilicaslan.customerSystem.controller;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
+import com.mertkilicaslan.customerSystem.dto.request.BalanceOperationRequest;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerLoginRequest;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.response.BalanceOperationResponse;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,10 +21,11 @@ import org.springframework.web.bind.annotation.*;
  * @see <a href="http://localhost:8080/swagger-ui/">Swagger documentation</a>
  */
 
-@Tag(name = "Customer Controller", description = "API Documentation for Remote Customer Acquisition System")
+
 @RestController
 @RequestMapping("/customer")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Remote Customer Acquisition System", description = "API Documentation for Remote Customer Acquisition System")
 public class CustomerController {
 
 	private final CustomerService customerService;
@@ -41,5 +44,11 @@ public class CustomerController {
 	@Operation(summary = "Authenticate and fetch customer information", description = "Receives customer credentials for system login")
 	public ResponseEntity<CustomerLoginResponse> getCustomerInformation(@RequestBody CustomerLoginRequest request) {
 		return new ResponseEntity<>(customerService.getCustomerInformation(request), HttpStatus.OK);
+	}
+
+	@PostMapping("/updateBalance")
+	@Operation(summary = "Update customer balance information", description = "Receives balance request and email")
+	public ResponseEntity<BalanceOperationResponse> updateCustomerBalance(@RequestBody BalanceOperationRequest request) {
+		return new ResponseEntity<>(customerService.updateCustomerBalance(request), HttpStatus.OK);
 	}
 }
