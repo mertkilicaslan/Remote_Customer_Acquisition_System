@@ -1,7 +1,7 @@
 package com.mertkilicaslan.customerSystem.mapper;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
 import com.mertkilicaslan.customerSystem.model.Customer;
 
 public class CustomerMapper {

@@ -1,9 +1,11 @@
 package com.mertkilicaslan.customerSystem.service;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerRegisterResponse;
+import com.mertkilicaslan.customerSystem.dto.request.BalanceOperationRequest;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerLoginRequest;
+import com.mertkilicaslan.customerSystem.dto.response.BalanceOperationResponse;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.model.Balance;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
@@ -27,10 +29,8 @@ class CustomerServiceTest {
 
     @InjectMocks
     CustomerServiceImp service;
-
     @Mock
     CustomerRepository repository;
-
     @Mock
     BalanceServiceImp balanceService;
 
@@ -95,6 +95,18 @@ class CustomerServiceTest {
         assertThrows(NoSuchElementException.class, () -> service.getCustomerInformation(request));
     }
 
+    @Test
+    void updateCustomerBalance_WhenValidBalanceOperationRequest() {
+        BalanceOperationRequest request = validBalanceOperationRequest();
+
+        when(repository.findByEmail(request.getEmail())).thenReturn(Optional.of(new Customer()));
+        when(balanceService.updateBalanceInformationForCustomer(any(Customer.class), any(BalanceOperationRequest.class))).thenReturn(validBalanceInformation());
+
+        BalanceOperationResponse response = service.updateCustomerBalance(request);
+        assertTrue(response.getIsSuccess());
+        assertEquals(100, response.getCreditBalance());
+    }
+
     private CustomerRegisterRequest validCustomerRegisterRequest() {
         CustomerRegisterRequest request = new CustomerRegisterRequest();
         request.setName("Mert");
@@ -120,6 +132,14 @@ class CustomerServiceTest {
         balance.setCreditBalance(100);
         balance.setDebitBalance(100);
         return balance;
+    }
+
+    private BalanceOperationRequest validBalanceOperationRequest() {
+        BalanceOperationRequest balanceOperationReq = new BalanceOperationRequest();
+        balanceOperationReq.setEmail("mert@mert.com");
+        balanceOperationReq.setCreditBalanceRequest(-40);
+        balanceOperationReq.setDebitBalanceRequest(20);
+        return balanceOperationReq;
     }
 
 }
