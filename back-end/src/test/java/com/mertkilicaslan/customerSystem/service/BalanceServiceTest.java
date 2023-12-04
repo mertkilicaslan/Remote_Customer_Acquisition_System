@@ -36,7 +36,6 @@ class BalanceServiceTest {
         assertEquals(expectedBalance.getCreditBalance(), actualBalance.getCreditBalance());
         assertEquals(expectedBalance.getDebitBalance(), actualBalance.getDebitBalance());
         verify(repository).save(any(Balance.class));
-
     }
 
     @Test
@@ -49,7 +48,6 @@ class BalanceServiceTest {
         assertEquals(expectedBalance.getCreditBalance(), actualBalance.getCreditBalance());
         assertEquals(expectedBalance.getDebitBalance(), actualBalance.getDebitBalance());
         verify(repository).findByCustomer(any(Customer.class));
-
     }
 
     @Test
@@ -70,29 +68,32 @@ class BalanceServiceTest {
     @Test
     void givenInvalidOperationRequest_whenUpdateBalanceInformationForCustomer_ShouldThrowException() {
         BalanceOperationRequest request = validBalanceOperationRequest();
+        Customer customer = new Customer();
         request.setDebitBalanceRequest(null);
 
-        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(new Customer(), request));
+        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(customer, request));
     }
 
     @Test
     void givenInsufficientDebit_whenUpdateBalanceInformationForCustomer_ShouldThrowException() {
         Balance expectedBalance = validBalanceInformation();
+        Customer customer = new Customer();
         BalanceOperationRequest request = validBalanceOperationRequest();
         request.setDebitBalanceRequest(-200);
         when(repository.findByCustomer(any(Customer.class))).thenReturn(Optional.of(expectedBalance));
 
-        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(new Customer(), request));
+        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(customer, request));
     }
 
     @Test
     void givenInsufficientCredit_whenUpdateBalanceInformationForCustomer_ShouldThrowException() {
         Balance expectedBalance = validBalanceInformation();
+        Customer customer = new Customer();
         BalanceOperationRequest request = validBalanceOperationRequest();
         request.setCreditBalanceRequest(-200);
         when(repository.findByCustomer(any(Customer.class))).thenReturn(Optional.of(expectedBalance));
 
-        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(new Customer(), request));
+        assertThrows(IllegalArgumentException.class, () -> service.updateBalanceInformationForCustomer(customer, request));
     }
 
     private Balance validBalanceInformation() {
