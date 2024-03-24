@@ -32,7 +32,7 @@ class CustomerServiceTest {
     @Mock
     CustomerRepository repository;
     @Mock
-    BalanceServiceImp balanceService;
+    BalanceService balanceService;
 
     @Test
     void createNewCustomerSuccessfully_WhenRegisteredCredentialValid() {
@@ -105,6 +105,14 @@ class CustomerServiceTest {
         BalanceOperationResponse response = service.updateCustomerBalance(request);
         assertTrue(response.getIsSuccess());
         assertEquals(100, response.getCreditBalance());
+    }
+
+    @Test
+    void updateCustomerBalance_WhenEmailIsInvalid() {
+        BalanceOperationRequest request = validBalanceOperationRequest();
+        request.setEmail(null);
+
+        assertThrows(IllegalArgumentException.class, () -> service.updateCustomerBalance(request));
     }
 
     private CustomerRegisterRequest validCustomerRegisterRequest() {

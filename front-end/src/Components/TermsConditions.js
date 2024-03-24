@@ -1,10 +1,7 @@
-import React from "react";
 import "../App.css";
 
-import { termsConditionsText } from "../utils/Constants";
-
 const TermsConditions = (props) => {
-  const { showPopup, setShowPopup, setTermsConfirm } = props;
+  const { t, showPopup, setShowPopup, setTermsConfirm } = props;
 
   const closePopUp = (confirm) => {
     setShowPopup(false);
@@ -19,9 +16,11 @@ const TermsConditions = (props) => {
             <button className="close-button" onClick={() => closePopUp(false)}>
               &#10006;
             </button>
-            <h2> Ayıdnlatma Metni</h2>
-            <p>{termsConditionsText}</p>
-            <button onClick={() => closePopUp(true)}>Okudum, onayladım.</button>
+            <h2>{t("termsConditionsPopupTitle")}</h2>
+            <p>{t("termsConditionsText")}</p>
+            <button onClick={() => closePopUp(true)}>
+              {t("readAndApproveBtnName")}
+            </button>
           </div>
         </div>
       </>

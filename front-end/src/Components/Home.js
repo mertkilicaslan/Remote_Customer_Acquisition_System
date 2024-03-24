@@ -1,28 +1,20 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../App.css";
-import Login from "./Login";
-import Signup from "./Signup";
 
-const Home = () => {
+const Home = (props) => {
+  const { t } = props;
   return (
     <>
       <div className="center">
-        <p className="greetings-message">
-          İnternet Bankacılığına Hoş Geldiniz!
-        </p>
+        <p className="greetings-message">{t("greetingsMessage")}</p>
         <Link to="/login">
-          <button>Giriş Yap</button>
+          <button>{t("loginBtnName")}</button>
         </Link>
 
         <Link to="/signup">
-          <button>Müşteri Ol</button>
+          <button>{t("signupBtnName")}</button>
         </Link>
       </div>
-
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
     </>
   );
 };

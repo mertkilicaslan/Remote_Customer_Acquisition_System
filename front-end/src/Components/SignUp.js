@@ -24,7 +24,9 @@ const initalValues = {
   phoneNo: "",
   hasatKartPreference: false,
 };
-const Signup = () => {
+const Signup = (props) => {
+  const { t } = props;
+
   const [showEmailPass, setShowEmailPass] = useState(true);
   const [showNameSurnameDate, setShowNameSurnameDate] = useState(false);
   const [showPhoneTC, setShowPhoneTC] = useState(false);
@@ -55,9 +57,9 @@ const Signup = () => {
     <>
       {showEmailPass && (
         <form className="center">
-          <p className="greetings-message">Müşterimiz Ol</p>
+          <p className="greetings-message">{t("signupFormTitle")}</p>
           <div>
-            <label htmlFor="email">E-Mail</label>
+            <label htmlFor="email">{t("email")}</label>
             <input
               autoFocus
               type="text"
@@ -75,7 +77,7 @@ const Signup = () => {
           <p className="signup-error">{formErrors.email}</p>
 
           <div>
-            <label htmlFor="password">Şifre</label>
+            <label htmlFor="password">{t("password")}</label>
             <input
               type="password"
               id="password"
@@ -94,7 +96,7 @@ const Signup = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              const errors = validateEmailPass(formValues);
+              const errors = validateEmailPass(t, formValues);
 
               if (Object.keys(errors).length) {
                 setFormErrors(errors);
@@ -105,7 +107,7 @@ const Signup = () => {
               }
             }}
           >
-            Devam
+            {t("continueBtnName")}
           </button>
         </form>
       )}
@@ -113,7 +115,7 @@ const Signup = () => {
       {showNameSurnameDate && (
         <form className="center">
           <div>
-            <label htmlFor="name">Ad</label>
+            <label htmlFor="name">{t("name")}</label>
             <input
               autoFocus
               type="text"
@@ -131,7 +133,7 @@ const Signup = () => {
           <p className="signup-error">{formErrors.name}</p>
 
           <div>
-            <label htmlFor="surname">Soyad</label>
+            <label htmlFor="surname">{t("surname")}</label>
             <input
               type="text"
               id="surname"
@@ -148,7 +150,7 @@ const Signup = () => {
           <p className="signup-error">{formErrors.surname}</p>
 
           <div>
-            <label htmlFor="birthday">Doğum Tarihi</label>
+            <label htmlFor="birthday">{t("birthday")}</label>
             <input
               type="date"
               id="birthday"
@@ -167,7 +169,7 @@ const Signup = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              const errors = validateNameSurnameDate(formValues);
+              const errors = validateNameSurnameDate(t, formValues);
 
               if (Object.keys(errors).length) {
                 setFormErrors(errors);
@@ -178,7 +180,7 @@ const Signup = () => {
               }
             }}
           >
-            Devam
+            {t("continueBtnName")}
           </button>
         </form>
       )}
@@ -186,7 +188,7 @@ const Signup = () => {
       {showPhoneTC && (
         <form className="center">
           <div>
-            <label htmlFor="tcNo">TC Kimlik Numarası</label>
+            <label htmlFor="tcNo">{t("tckno")}</label>
             <input
               autoFocus
               type="text"
@@ -205,7 +207,7 @@ const Signup = () => {
           <p className="signup-error">{formErrors.tcNo}</p>
 
           <div>
-            <label htmlFor="phoneNo">Cep Telefon Numarası</label>
+            <label htmlFor="phoneNo">{t("phoneNo")}</label>
             <PatternFormat
               format="+90 (###) ### ####"
               allowEmptyFormatting
@@ -236,7 +238,7 @@ const Signup = () => {
                 formValues.hasatKartPreference = !hasatKart;
               }}
             ></input>
-            <label htmlFor="hasatKart">Hasat Kart İstiyorum</label>
+            <label htmlFor="hasatKart">{t("harvestCardPreference")}</label>
           </div>
 
           <div className="checkbox-container">
@@ -254,11 +256,10 @@ const Signup = () => {
                 }
               }}
             ></input>
-            <label htmlFor="uzaktanMusteri">
-              Uzaktan Müşteri Edinimi Aydınlatma Metni
-            </label>
+            <label htmlFor="uzaktanMusteri">{t("uzaktanMusteri")}</label>
 
             <TermsConditions
+              t={t}
               showPopup={showPopup}
               setShowPopup={setShowPopup}
               setTermsConfirm={setTermsConfirm}
@@ -279,7 +280,7 @@ const Signup = () => {
             disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-              const errors = validatePhoneTC(formValues, termsConfirm);
+              const errors = validatePhoneTC(t, formValues, termsConfirm);
 
               if (Object.keys(errors).length || !termsConfirm) {
                 setFormErrors(errors);
@@ -304,7 +305,7 @@ const Signup = () => {
               }
             }}
           >
-            Müşteri Ol
+            {t("signupBtnName")}
           </button>
         </form>
       )}
@@ -312,12 +313,14 @@ const Signup = () => {
       {showEndingModal && (
         <div className="center">
           <h1>
-            {signupSuccessful ? "İşleminiz Başarılı " : "İşleminiz Başarısız"}
+            {t(signupSuccessful ? "signupSuccessMessage" : "signupFailMessage")}
           </h1>
           <p>
-            {signupSuccessful
-              ? "Müşterimiz olduğunuz için teşekkür ederiz. "
-              : "Anasayfaya dönün ve tekrar deneyin."}
+            {t(
+              signupSuccessful
+                ? "signupThankYouMessage"
+                : "returnHomePageTryAgainMessage"
+            )}
           </p>
           <Link to="/">
             <button
@@ -325,7 +328,7 @@ const Signup = () => {
                 setShowEndingModal(false);
               }}
             >
-              Anasayfa
+              {t("homePageBtnName")}
             </button>
           </Link>
         </div>

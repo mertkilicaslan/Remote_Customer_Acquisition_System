@@ -1,63 +1,62 @@
-export const validateEmailPass = (values) => {
+export const validateEmailPass = (t, values) => {
   const errors = {};
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
   const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/;
 
   if (!values.email) {
-    errors.email = "Lütfen e-mail adresinizi giriniz.";
+    errors.email = t("emailRequired");
   } else if (!regexEmail.test(values.email)) {
-    errors.email = "E-mail geçerli formatda değil.";
+    errors.email = t("emailInvalidFormat");
   }
   if (!values.password) {
-    errors.password = "Lütfen şifrenizi giriniz.";
+    errors.password = t("passwordRequired");
   } else if (!regexPassword.test(values.password)) {
-    errors.password =
-      "Şifreniz en az sekiz karakter, bir büyük harf, bir küçük harf ve bir sayı içermelidir.";
+    errors.password = t("passwordComplexityRequirement");
   }
 
   return errors;
 };
 
-export const validateNameSurnameDate = (values) => {
+export const validateNameSurnameDate = (t, values) => {
   const errors = {};
 
   if (!values.name) {
-    errors.name = "Lütfen isminizi giriniz.";
+    errors.name = t("nameRequired");
   }
   if (!values.surname) {
-    errors.surname = "Lütfen soyisminizi giriniz.";
+    errors.surname = t("surnameRequired");
   }
   if (!values.birthday) {
-    errors.birthday = "Lütfen doğum tarihinizi giriniz.";
+    errors.birthday = t("birthdayRequired");
   } else if (
     parseInt(values.birthday.substring(0, values.birthday.indexOf("-"))) >=
       2012 ||
     parseInt(values.birthday.substring(0, values.birthday.indexOf("-"))) <= 1922
   ) {
-    errors.birthday = "Doğum tarihinizi kontrol edin.";
+    errors.birthday = t("birthdayCheck");
   }
 
   return errors;
 };
 
-export const validatePhoneTC = (values, termsConfirm) => {
+export const validatePhoneTC = (t, values, termsConfirm) => {
   const errors = {};
   const regexTcNo = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
   const regexPhoneNo =
     /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
   if (!values.tcNo) {
-    errors.tcNo = "Lütfen TC Kimlik Numaranızı giriniz.";
+    errors.tcNo = t("tcNoRequired");
   } else if (!regexTcNo.test(values.tcNo)) {
-    errors.tcNo = "TC Kimlik Numaranızı kontrol edin.";
+    errors.tcNo = t("tcNoCheck");
   }
   if (values.phoneNo && values.phoneNo[5] === "_") {
-    errors.phoneNo = "Lütfen cep telefon numaranızı giriniz.";
+    errors.phoneNo = t("phoneNoRequired");
   } else if (values.phoneNo && !regexPhoneNo.test(values.phoneNo)) {
-    errors.phoneNo = "Cep telefon numaranızı kontrol edin.";
+    errors.phoneNo = t("phoneNoCheck");
   }
   if (!termsConfirm) {
-    errors.popUp = "Müşteri olmak için sözleşmeyi onaylamalısınız.";
+    errors.popUp = t("termsConfirmRequired");
   }
 
   return errors;
