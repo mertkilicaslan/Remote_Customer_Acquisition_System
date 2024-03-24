@@ -1,24 +1,24 @@
-import React from "react";
+const MiniProfile = (props) => {
+  const { t, userInformation } = props;
 
-const MiniProfile = ({ userInformation }) => {
   return (
     <section className="mini-profile ">
-      <h3>Profil Bilgilerim</h3>
+      <h3>{t("myProfileInformation")}</h3>
       <ul>
         <li>
-          <strong>Telefon No: </strong>
+          <strong>{t("phoneNo")}: </strong>
           {userInformation.phoneNo}
         </li>
         <li>
-          <strong>T.C. Kimlik No: </strong>
+          <strong>{t("tckno")}: </strong>
           {userInformation.tcNo}
         </li>
         <li>
-          <strong>Doğum Tarihi: </strong>
+          <strong>{t("birthday")}: </strong>
           {userInformation.birthday}
         </li>
         <li>
-          <strong>Hasat Kart</strong>
+          <strong>{t("harvestCard")}</strong>
           {userInformation.hasatKart === "false"
             ? "'a sahip değilsiniz."
             : "'a sahipsiniz."}

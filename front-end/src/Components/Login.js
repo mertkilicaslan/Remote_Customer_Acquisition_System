@@ -6,7 +6,9 @@ import { loginCustomer } from "../api/CustomerApi";
 import "../App.css";
 import icon from "../assets/icon.png";
 
-const Login = () => {
+const Login = (props) => {
+  const { t } = props;
+
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [showAssetsPage, setShowAssetsPage] = useState(false);
   const [showMiniProfile, setShowMiniProfile] = useState(false);
@@ -26,9 +28,9 @@ const Login = () => {
     <>
       {showLoginPage && (
         <form className="center">
-          <p className="greetings-message">Giriş Yap</p>
+          <p className="greetings-message">{t("loginFormTitle")}</p>
           <div>
-            <label htmlFor="email">E-Mail</label>
+            <label htmlFor="email">{t("email")}</label>
             <input
               autoFocus
               type="text"
@@ -43,7 +45,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="password">Şifre</label>
+            <label htmlFor="password">{t("password")}</label>
             <input
               type="password"
               id="password"
@@ -57,7 +59,7 @@ const Login = () => {
           </div>
 
           <p className="login-error">
-            {loginFail ? "Lütfen şifrenizi veya emailinizi kontrol edin!" : ""}
+            {loginFail ? t("loginFailMessage") : ""}
           </p>
 
           <button
@@ -82,7 +84,7 @@ const Login = () => {
               }
             }}
           >
-            Giriş yap
+            {t("loginBtnName")}
           </button>
         </form>
       )}
@@ -97,9 +99,12 @@ const Login = () => {
             {userInformation.name + "  " + userInformation.surname}
           </button>
 
-          {showMiniProfile && <MiniProfile userInformation={userInformation} />}
+          {showMiniProfile && (
+            <MiniProfile t={t} userInformation={userInformation} />
+          )}
           {showAssetsPage && (
             <Assets
+              t={t}
               name={userInformation.name}
               surname={userInformation.surname}
             />

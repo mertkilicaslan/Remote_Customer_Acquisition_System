@@ -19,7 +19,8 @@ nav {
   height: 80px;
   display: flex;
   margin-bottom: 150px;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: start;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   position: relative;
@@ -224,7 +225,7 @@ label {
   right: 0;
 
   width: 260px;
-  height: 140px;
+  height: 180px;
   color: green;
 }
 

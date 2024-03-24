@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Assets = ({ name, surname }) => {
+const Assets = (props) => {
+  const { t, name, surname } = props;
+
   const [bankBalance, setBankBalance] = useState(265);
   const [creditBalance, setCreditBalance] = useState(394);
 
   return (
     <div className="center">
       <p className="greetings-message">
-        Hoş Geldiniz {name} {surname}
+        {t("welcomeMessage")} {name} {surname}
       </p>
       <hr />
 
-      <h2>Varlıklarım</h2>
+      <h2>{t("assetsTitle")}</h2>
       <div className="assets">
-        <p>Banka Kartı</p>
+        <p>{t("bankCard")}</p>
         <div className="balance-actions">
           <button onClick={() => setBankBalance((prevState) => prevState - 1)}>
             -
@@ -26,7 +28,7 @@ const Assets = ({ name, surname }) => {
       </div>
 
       <div className="assets">
-        <p>Kredi Kartı</p>
+        <p>{t("creditCard")}</p>
         <div className="balance-actions">
           <button
             onClick={() => setCreditBalance((prevState) => prevState - 1)}
