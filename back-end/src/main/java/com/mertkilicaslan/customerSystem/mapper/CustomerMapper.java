@@ -1,12 +1,16 @@
 package com.mertkilicaslan.customerSystem.mapper;
 
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
 import com.mertkilicaslan.customerSystem.model.Customer;
 
 public class CustomerMapper {
 
-	public final static Customer toEntity(NewCustomerRequest request) {
+	private CustomerMapper() {
+		throw new AssertionError("Utility class!");
+	}
+
+	public static Customer toEntity(CustomerRegisterRequest request) {
 		if (request == null) {
 			return null;
 		}
@@ -25,7 +29,7 @@ public class CustomerMapper {
 		return customer;
 	}
 
-	public final static CustomerLoginResponse entityToResponse(Customer customer) {
+	public static CustomerLoginResponse entityToResponse(Customer customer) {
 		if (customer == null) {
 			return null;
 		}

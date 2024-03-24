@@ -1,89 +1,98 @@
 package com.mertkilicaslan.customerSystem.service;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginRequest;
-import com.mertkilicaslan.customerSystem.dto.CustomerLoginResponse;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerRequest;
-import com.mertkilicaslan.customerSystem.dto.NewCustomerResponse;
+import com.mertkilicaslan.customerSystem.common.CustomerConstants;
+import com.mertkilicaslan.customerSystem.dto.request.BalanceOperationRequest;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerLoginRequest;
+import com.mertkilicaslan.customerSystem.dto.request.CustomerRegisterRequest;
+import com.mertkilicaslan.customerSystem.dto.response.BalanceOperationResponse;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerLoginResponse;
+import com.mertkilicaslan.customerSystem.dto.response.CustomerRegisterResponse;
 import com.mertkilicaslan.customerSystem.mapper.CustomerMapper;
+import com.mertkilicaslan.customerSystem.model.Balance;
 import com.mertkilicaslan.customerSystem.model.Customer;
 import com.mertkilicaslan.customerSystem.repository.CustomerRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
 
-	private final CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final BalanceService balanceService;
 
-	public CustomerServiceImp(CustomerRepository customerRepository) {
-		this.customerRepository = customerRepository;
-	}
+    public CustomerServiceImp(CustomerRepository customerRepository, BalanceService balanceService) {
+        this.customerRepository = customerRepository;
+        this.balanceService = balanceService;
+    }
 
-	@Override
-	public NewCustomerResponse createNewCustomer(NewCustomerRequest request) {
-		NewCustomerResponse response = new NewCustomerResponse();
-		response.setIsSuccess(false);
+    @Override
+    public CustomerRegisterResponse createNewCustomer(CustomerRegisterRequest request) {
+        if (request == null || !isValidCustomerInformation(request)) {
+            throw new IllegalArgumentException(CustomerConstants.CUSTOMER_CREDENTIALS_INVALID);
+        }
 
-		if (!isValidCustomerInformation(request)) {
-			return response;
-		}
+        customerRepository.findByEmail(request.getEmail()).ifPresent(c -> {
+            throw new DataIntegrityViolationException(CustomerConstants.CUSTOMER_ALREADY_EXIST + c.getEmail());
+        });
 
-		Optional<Customer> optionalCustomer = customerRepository.findByEmail(request.getEmail());
-		if (optionalCustomer.isPresent()) {
-			return response;
-		}
+        Customer registeredCustomer = customerRepository.save(CustomerMapper.toEntity(request));
+        balanceService.createInitialBalanceForCustomer(registeredCustomer);
 
-		Customer customer = CustomerMapper.toEntity(request);
-		customerRepository.save(customer);
-		response.setIsSuccess(true);
-		return response;
-	}
+        CustomerRegisterResponse response = new CustomerRegisterResponse();
+        response.setIsSuccess(true);
+        return response;
+    }
 
-	@Override
-	public CustomerLoginResponse getCustomerInformation(CustomerLoginRequest request) {
-		CustomerLoginResponse response = new CustomerLoginResponse();
-		response.setIsSuccess(false);
+    @Override
+    public CustomerLoginResponse getCustomerInformation(CustomerLoginRequest request) {
+        if (request == null || !isValidEmailFormat(request.getEmail()) || !isValidPasswordFormat(request.getPassword())) {
+            throw new IllegalArgumentException(CustomerConstants.EMAIL_PASSWORD_INVALID);
+        }
 
-		if (!isValidEmail(request.getEmail()) && !isValidPassword(request.getPassword())) {
-			return response;
-		}
+        Customer customer = customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
+                .orElseThrow(() -> new NoSuchElementException(CustomerConstants.EMAIL_PASSWORD_INCORRECT));
 
-		Optional<Customer> optionalCustomer = customerRepository.findByEmailAndPassword(request.getEmail(),
-				request.getPassword());
-		if (optionalCustomer.isEmpty()) {
-			return response;
-		}
+        CustomerLoginResponse response = CustomerMapper.entityToResponse(customer);
+        Balance customerBalance = balanceService.getBalanceInformationForCustomer(customer);
+        response.setCreditBalance(customerBalance.getCreditBalance());
+        response.setDebitBalance(customerBalance.getDebitBalance());
+        response.setIsSuccess(true);
+        return response;
+    }
 
-		response = CustomerMapper.entityToResponse(optionalCustomer.get());
-		response.setIsSuccess(true);
-		return response;
-	}
+    @Override
+    public BalanceOperationResponse updateCustomerBalance(BalanceOperationRequest request) {
+        if (request == null || !isValidEmailFormat(request.getEmail())) {
+            throw new IllegalArgumentException(CustomerConstants.EMAIL_PASSWORD_INVALID);
+        }
 
-	boolean isValidCustomerInformation(NewCustomerRequest request) {
-		if (request.getEmail() == null || request.getEmail().isBlank() || !isValidEmail(request.getEmail())) {
-			return false;
-		}
-		if (request.getPassword() == null || request.getPassword().isBlank()
-				|| !isValidPassword(request.getPassword())) {
-			return false;
-		}
-		return request.getName() != null && !request.getName().isBlank() && request.getSurname() != null
-				&& !request.getSurname().isBlank() && request.getBirthday() != null && !request.getBirthday().isBlank()
-				&& request.getTcNo() != null && !request.getTcNo().isBlank() && request.getPhoneNo() != null
-				&& !request.getPhoneNo().isBlank() && request.getHasatKartPreference() != null;
+        Customer customer = customerRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new NoSuchElementException(CustomerConstants.EMAIL_PASSWORD_INCORRECT));
 
-	}
+        Balance customerBalance = balanceService.updateBalanceInformationForCustomer(customer, request);
+        BalanceOperationResponse response = new BalanceOperationResponse();
+        response.setCreditBalance(customerBalance.getCreditBalance());
+        response.setDebitBalance(customerBalance.getDebitBalance());
+        response.setIsSuccess(true);
+        return response;
+    }
 
-	private boolean isValidEmail(String email) {
-		// RegEx: Basic email validation
-		return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
-	}
+    private boolean isValidCustomerInformation(CustomerRegisterRequest request) {
+        return isValidEmailFormat(request.getEmail()) && isValidPasswordFormat(request.getPassword())
+                && StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
+                && StringUtils.hasText(request.getTcNo()) && StringUtils.hasText(request.getPhoneNo())
+                && StringUtils.hasText(request.getBirthday()) && request.getHasatKartPreference() != null;
+    }
 
-	private boolean isValidPassword(String password) {
-		// RegEx: Password must be at least 8 characters with 1 number
-		return password.length() >= 8 && password.matches(".*\\d.*");
-	}
+    private boolean isValidEmailFormat(String email) {
+        return StringUtils.hasText(email) && email.matches(CustomerConstants.EMAIL_REGEX);
+    }
+
+    private boolean isValidPasswordFormat(String password) {
+        return StringUtils.hasText(password) && password.matches(CustomerConstants.PASSWORD_REGEX);
+    }
 
 }
