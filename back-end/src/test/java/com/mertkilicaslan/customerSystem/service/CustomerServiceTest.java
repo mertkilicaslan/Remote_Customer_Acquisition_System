@@ -124,7 +124,7 @@ class CustomerServiceTest {
         request.setBirthday("2000-01-01");
         request.setPhoneNo("05123456789");
         request.setTcNo("12345678900");
-        request.setHasatKartPreference(true);
+        request.setHarvestCardPreference(true);
         return request;
     }
 

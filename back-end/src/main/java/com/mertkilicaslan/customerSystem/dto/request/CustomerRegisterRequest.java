@@ -15,5 +15,5 @@ public class CustomerRegisterRequest {
 	private String birthday;
 	private String tcNo;
 	private String phoneNo;
-	private Boolean hasatKartPreference;
+	private Boolean harvestCardPreference;
 }

@@ -2,7 +2,7 @@ export default {
   // Home
   greetingsMessage: "Welcome to Internet Banking!",
   loginBtnName: "Log In",
-  signupBtnName: "Sign up as a customer",
+  signupBtnName: "Sign Up",
 
   // Login
   loginFormTitle: "Login to the Internet Banking!",
@@ -18,7 +18,7 @@ export default {
   tckno: "Turkish Identification Number",
   phoneNo: "Mobile Phone Number",
   harvestCardPreference: "I Want a Harvest Card",
-  uzaktanMusteri: "Remote Customer Acquisition Disclosure Text",
+  termsConditions: "Remote Customer Acquisition Disclosure Text",
   continueBtnName: "Continue",
   homePageBtnName: "Homepage",
   signupSuccessMessage: "Your transaction was successful",
@@ -28,21 +28,13 @@ export default {
 
   // TermsConditions
   termsConditionsPopupTitle: "Disclosure Text",
-  termsConditionsText: `
-  Disclosure Text Disclosure Text Disclosure Text
-  Disclosure Text Disclosure Text Disclosure Text Disclosure
-  Text Disclosure Text Disclosure Text Disclosure Text
-  Disclosure Text Disclosure Text Disclosure Text Disclosure
-  Text Disclosure Text Disclosure Text Disclosure Text
-  Disclosure Text Disclosure Text Disclosure Text Disclosure
-  Text Disclosure Text Disclosure Text Disclosure Text
-  `,
+  termsConditionsText: "This is a disclosure text. ",
   readAndApproveBtnName: "I have read and approved",
 
   // Assets
   welcomeMessage: "Welcome",
   assetsTitle: "My Assets",
-  bankCard: "Bank Card",
+  debitCard: "Debit Card",
   creditCard: "Credit Card",
 
   // MiniProfile

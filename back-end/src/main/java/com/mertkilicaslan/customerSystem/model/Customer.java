@@ -38,8 +38,8 @@ public class Customer {
 	@Column(name = "PHONE_NO")
 	private String phoneNo;
 
-	@Column(name = "HK_PREF")
-	private Boolean hasatKartPreference;
+	@Column(name = "HC_PREF")
+	private Boolean harvestCardPreference;
 
 }
 

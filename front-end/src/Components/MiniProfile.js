@@ -19,7 +19,7 @@ const MiniProfile = (props) => {
         </li>
         <li>
           <strong>{t("harvestCard")}</strong>
-          {userInformation.hasatKart === "false"
+          {userInformation.harvestCard === "false"
             ? "'a sahip değilsiniz."
             : "'a sahipsiniz."}
         </li>

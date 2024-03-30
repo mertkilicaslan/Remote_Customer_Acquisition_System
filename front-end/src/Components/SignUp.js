@@ -22,7 +22,7 @@ const initalValues = {
   birthday: "",
   tcNo: "",
   phoneNo: "",
-  hasatKartPreference: false,
+  harvestCardPreference: false,
 };
 const Signup = (props) => {
   const { t } = props;
@@ -36,7 +36,7 @@ const Signup = (props) => {
   const [termsConfirm, setTermsConfirm] = useState(false);
 
   const [signupSuccessful, setSignupSuccessful] = useState(false);
-  const [hasatKart, setHasatKart] = useState(false);
+  const [harvestCard, setHarvestCard] = useState(false);
 
   const [formValues, setFormValues] = useState(initalValues);
   const [formErrors, setFormErrors] = useState({});
@@ -215,9 +215,7 @@ const Signup = (props) => {
               id="phoneNo"
               name="phoneNo"
               disabled={loading}
-              onValueChange={(values) => {
-                setPhoneObj(values);
-              }}
+              onValueChange={(values) => setPhoneObj(values)}
               style={{
                 border: formErrors.phoneNo
                   ? "1px solid #ff4444"
@@ -230,23 +228,23 @@ const Signup = (props) => {
           <div className="checkbox-container">
             <input
               type="checkbox"
-              id="hasatKart"
-              name="checkbox2"
+              id="harvestCard"
+              name="harvestCard"
               disabled={loading}
               onChange={(e) => {
-                e.target.checked ? setHasatKart(true) : setHasatKart(false);
-                formValues.hasatKartPreference = !hasatKart;
+                setHarvestCard(e.target.checked);
+                formValues.harvestCardPreference = !harvestCard;
               }}
             ></input>
-            <label htmlFor="hasatKart">{t("harvestCardPreference")}</label>
+            <label htmlFor="harvestCard">{t("harvestCardPreference")}</label>
           </div>
 
           <div className="checkbox-container">
             <input
               type="checkbox"
-              id="uzaktanMusteri"
-              name="checkbox1"
-              value="uzaktanMusteri"
+              id="termsConditions"
+              name="termsConditions"
+              value="termsConditions"
               disabled={loading}
               checked={termsConfirm}
               onChange={(e) => {
@@ -256,7 +254,7 @@ const Signup = (props) => {
                 }
               }}
             ></input>
-            <label htmlFor="uzaktanMusteri">{t("uzaktanMusteri")}</label>
+            <label htmlFor="termsConditions">{t("termsConditions")}</label>
 
             <TermsConditions
               t={t}
@@ -323,11 +321,7 @@ const Signup = (props) => {
             )}
           </p>
           <Link to="/">
-            <button
-              onClick={() => {
-                setShowEndingModal(false);
-              }}
-            >
+            <button onClick={() => setShowEndingModal(false)}>
               {t("homePageBtnName")}
             </button>
           </Link>
