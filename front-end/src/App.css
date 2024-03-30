@@ -280,6 +280,7 @@ label {
 .terms-conditions-inner .close-button:hover {
   background-color: #588404;
 }
-.terms-conditions-inner button {
+.terms-conditions-inner button, 
+.terms-conditions-inner p {
   display: inline;
 }

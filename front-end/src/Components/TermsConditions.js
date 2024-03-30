@@ -3,9 +3,9 @@ import "../App.css";
 const TermsConditions = (props) => {
   const { t, showPopup, setShowPopup, setTermsConfirm } = props;
 
-  const closePopUp = (confirm) => {
+  const closePopUp = (termsConfirm) => {
     setShowPopup(false);
-    setTermsConfirm(confirm);
+    setTermsConfirm(termsConfirm);
   };
 
   return (
@@ -17,7 +17,11 @@ const TermsConditions = (props) => {
               &#10006;
             </button>
             <h2>{t("termsConditionsPopupTitle")}</h2>
-            <p>{t("termsConditionsText")}</p>
+            {Array(11)
+              .fill(null)
+              .map((_, i) => (
+                <p key={i}>{t("termsConditionsText")}</p>
+              ))}
             <button onClick={() => closePopUp(true)}>
               {t("readAndApproveBtnName")}
             </button>

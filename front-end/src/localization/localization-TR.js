@@ -18,7 +18,7 @@ export default {
   tckno: "TC Kimlik Numarası",
   phoneNo: "Cep Telefonu Numarası",
   harvestCardPreference: "Hasat Kart İstiyorum",
-  uzaktanMusteri: "Uzaktan Müşteri Edinimi Aydınlatma Metni",
+  termsConditions: "Uzaktan Müşteri Edinimi Aydınlatma Metni",
   continueBtnName: "Devam",
   homePageBtnName: "Anasayfa",
   signupSuccessMessage: "İşleminiz Başarılı",
@@ -28,21 +28,13 @@ export default {
 
   // TermsConditions
   termsConditionsPopupTitle: "Aydınlatma Metni",
-  termsConditionsText: `
-  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-  Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-  Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-  Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-  Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-  `,
+  termsConditionsText: "Bu bir ayıdnlatma metnidir. ",
   readAndApproveBtnName: "Okudum, onayladım.",
 
   // Assets
   welcomeMessage: "Hoş Geldiniz",
   assetsTitle: "Varlıklarım",
-  bankCard: "Banka Kartı",
+  debitCard: "Banka Kartı",
   creditCard: "Kredi Kartı",
 
   // MiniProfile
