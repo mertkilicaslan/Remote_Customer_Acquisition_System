@@ -1,9 +1,5 @@
-export const termsConditionsText = `
-  &emsp; Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-          Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-          Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-          Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-          Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-          Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma
-          Metni Ayıdnlatma Metni Ayıdnlatma Metni Ayıdnlatma Metni
-`;
+export default {
+  plusSign: "+",
+  minusSign: "-",
+  currencyTL: "TL",
+};
