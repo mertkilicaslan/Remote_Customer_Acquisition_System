@@ -14,5 +14,5 @@ public class CustomerLoginResponse extends BalanceOperationResponse {
 	private String birthday;
 	private String tcNo;
 	private String phoneNo;
-	private Boolean hasatKartPreference;
+	private Boolean harvestCardPreference;
 }

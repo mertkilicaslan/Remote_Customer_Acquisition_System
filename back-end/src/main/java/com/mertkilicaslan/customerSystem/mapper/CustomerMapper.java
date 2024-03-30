@@ -24,7 +24,7 @@ public class CustomerMapper {
 		customer.setBirthday(request.getBirthday());
 		customer.setTcNo(request.getTcNo());
 		customer.setPhoneNo(request.getPhoneNo());
-		customer.setHasatKartPreference(request.getHasatKartPreference());
+		customer.setHarvestCardPreference(request.getHarvestCardPreference());
 
 		return customer;
 	}
@@ -42,7 +42,7 @@ public class CustomerMapper {
 		response.setBirthday(customer.getBirthday());
 		response.setTcNo(customer.getTcNo());
 		response.setPhoneNo(customer.getPhoneNo());
-		response.setHasatKartPreference(customer.getHasatKartPreference());
+		response.setHarvestCardPreference(customer.getHarvestCardPreference());
 
 		return response;
 	}

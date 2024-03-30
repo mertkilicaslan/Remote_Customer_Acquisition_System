@@ -84,7 +84,7 @@ public class CustomerServiceImp implements CustomerService {
         return isValidEmailFormat(request.getEmail()) && isValidPasswordFormat(request.getPassword())
                 && StringUtils.hasText(request.getName()) && StringUtils.hasText(request.getSurname())
                 && StringUtils.hasText(request.getTcNo()) && StringUtils.hasText(request.getPhoneNo())
-                && StringUtils.hasText(request.getBirthday()) && request.getHasatKartPreference() != null;
+                && StringUtils.hasText(request.getBirthday()) && request.getHarvestCardPreference() != null;
     }
 
     private boolean isValidEmailFormat(String email) {
