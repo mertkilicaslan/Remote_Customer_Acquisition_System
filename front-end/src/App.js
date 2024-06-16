@@ -1,9 +1,9 @@
 import { Link, Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import Home from "./components/Home";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
+import Home from "./Components/Home";
+import Signup from "./Components/SignUp";
+import Login from "./Components/Login";
 
 import "./App.css";
 
