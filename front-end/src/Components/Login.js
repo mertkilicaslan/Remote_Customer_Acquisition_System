@@ -4,7 +4,7 @@ import MiniProfile from "./MiniProfile";
 import { loginCustomer } from "../api/CustomerApi";
 
 import "../App.css";
-import icon from "../assets/icon.png";
+import icon from "../Assets/icon.png";
 
 const Login = (props) => {
   const { t } = props;
