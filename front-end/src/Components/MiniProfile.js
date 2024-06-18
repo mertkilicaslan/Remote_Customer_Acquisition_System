@@ -10,7 +10,7 @@ const MiniProfile = (props) => {
           {userInformation.phoneNo}
         </li>
         <li>
-          <strong>{t("tckno")}: </strong>
+          <strong>{t("tcNo")}: </strong>
           {userInformation.tcNo}
         </li>
         <li>
