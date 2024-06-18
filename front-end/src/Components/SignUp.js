@@ -188,7 +188,7 @@ const Signup = (props) => {
       {showPhoneTC && (
         <form className="center">
           <div>
-            <label htmlFor="tcNo">{t("tckno")}</label>
+            <label htmlFor="tcNo">{t("tcNo")}</label>
             <input
               autoFocus
               type="text"

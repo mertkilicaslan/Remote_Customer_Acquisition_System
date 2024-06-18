@@ -15,7 +15,7 @@ export default {
   name: "Ad",
   surname: "Soyad",
   birthday: "Doğum Tarihi",
-  tckno: "TC Kimlik Numarası",
+  tcNo: "TC Kimlik Numarası",
   phoneNo: "Cep Telefonu Numarası",
   harvestCardPreference: "Hasat Kart İstiyorum",
   termsConditions: "Uzaktan Müşteri Edinimi Aydınlatma Metni",

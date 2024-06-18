@@ -15,7 +15,7 @@ export default {
   name: "Name",
   surname: "Surname",
   birthday: "Date of Birth",
-  tckno: "Turkish Identification Number",
+  tcNo: "Turkish Identification Number",
   phoneNo: "Mobile Phone Number",
   harvestCardPreference: "I Want a Harvest Card",
   termsConditions: "Remote Customer Acquisition Disclosure Text",
